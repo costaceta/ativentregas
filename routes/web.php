@@ -25,6 +25,8 @@ Route::get('/notifications', function () {
     return view('notifications');
 });
 
-Route::get('/access', function () {
-    return view('access');
+Route::get('/dashboard', function () {
+    return view('dashboard');
 });
+
+

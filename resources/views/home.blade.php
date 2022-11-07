@@ -19,7 +19,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">ATIVSERVICE - CE</span>
                     <span class="info-box-number mb-4">Ativservice.</span>
-                    <button class="btn btn-block btn-primary btn-sm">Acessar</button>
+                    <a href="/dashboard" class="btn btn-block btn-primary btn-sm">Acessar</a>
                 </div>
             </div>
         </div>
