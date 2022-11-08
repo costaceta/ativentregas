@@ -25,3 +25,8 @@ Os commits irão seguir o padrão Convencional commits
 
 - **[Convencional commits](https://www.conventionalcommits.org/pt-br/v1.0.0-beta.4/)**
 - **[Convencional commits exemplos](https://github.com/iuricode/padroes-de-commits)**
+
+## Dependências
+
+- **[Laravel Mapbox](https://github.com/koossaayy/laravel-mapbox)**
+
