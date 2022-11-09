@@ -211,7 +211,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -292,24 +292,69 @@ return [
     'menu' => [
         // Navbar items:
         [
+            'text' => 'Painel de operação',
+            'topnav' => true,
+            'url' => '/dashboard'
+        ],
+        [
+            'text' => 'Cadastros',
+            'url'  => '/',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'Cadastro de Atividade',
+                    'url'  => 'menu/child2',
+                ],
+                [
+                    'text' => 'Tipos de atividades',
+                    'url'  => 'menu/child1',
+                ],
+                [
+                    'text' => 'Modelos de formulários',
+                    'url'  => 'menu/child2',
+                ],
+                [
+                    'text' => 'Campos de formulários',
+                    'url'  => 'menu/child2',
+                ],
+                [
+                    'text' => 'Áreas do mapa',
+                    'url'  => 'menu/child1',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Relatórios',
+            'url'  => '/',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'Produtividade da equipe',
+                    'url'  => 'menu/child1',
+                ],
+                [
+                    'text' => 'Roteiros e atividades',
+                    'url'  => 'menu/child2',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Sistema',
+            'topnav' => true,
+        ],
+        [
             'type'         => 'navbar-search',
-            'text'         => 'search',
+            'text'         => 'Buscar...',
             'topnav_right' => true,
         ],
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Buscar...',
         ],
         [
             'text'        => 'Ambientes',
