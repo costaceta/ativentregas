@@ -29,4 +29,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+Route::resource('activities', \App\Http\Controllers\ActivityController::class);
+
 

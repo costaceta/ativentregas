@@ -303,7 +303,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Cadastro de Atividade',
-                    'url'  => 'menu/child2',
+                    'url'  => '/activities',
                 ],
                 [
                     'text' => 'Tipos de atividades',
