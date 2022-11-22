@@ -25,9 +25,7 @@ Route::get('/notifications', function () {
     return view('notifications');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('activities', \App\Http\Controllers\ActivityController::class);
 
