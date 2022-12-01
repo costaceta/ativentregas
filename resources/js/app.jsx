@@ -1,11 +1,19 @@
 import './bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@coreui/coreui/dist/css/coreui.min.css';
+
+// TODO: Remove this
 import '../css/app.css';
+
+import '../scss/style.scss'
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import store from './store'
+import { Provider } from 'react-redux'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -15,7 +23,7 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(<Provider store={store}><App {...props} /></Provider>);
     },
 });
 
