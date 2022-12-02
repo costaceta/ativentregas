@@ -40,22 +40,22 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             {/* <CNavLink> */}
-              <NavLink className='nav-link' href='/dashboard' >
+              {/* <NavLink className='nav-link' href='/dashboard' >
                 Dashboard
-              </NavLink>
+              </NavLink> */}
             {/* </CNavLink> */}
           </CNavItem>
           <CNavItem>
             {/* <CNavLink href="#">Users</CNavLink> */}
-            <NavLink className='nav-link' href='/coreui' >
+            {/* <NavLink className='nav-link' href='/coreui' >
                 Profile
-            </NavLink>
+            </NavLink> */}
           </CNavItem>
           <CNavItem>
             {/* <CNavLink href="#">Settings</CNavLink> */}
-            <NavLink className='nav-link' href='/coreui' >
+            {/* <NavLink className='nav-link' href='/coreui' >
                 Coreui
-            </NavLink>
+            </NavLink> */}
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>

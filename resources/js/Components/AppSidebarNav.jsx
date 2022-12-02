@@ -2,7 +2,7 @@ import React from 'react'
 
 // OLD: import { NavLink, useLocation } from 'react-router-dom'
 
-// TODO: remover o location da linha 53 pesquisar a melhor forma de setar o link ativo
+// TODO: pesquisar a melhor forma de setar o link ativo
 // TODO: Consertar o roteamento
 
 import { Link as NavLink } from '@inertiajs/inertia-react';
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 import { CBadge } from '@coreui/react'
 
 export const AppSidebarNav = ({ items }) => {
-  // OLD: const location = useLocation()
+  const location = route().current()
 
   const navLink = (name, icon, badge) => {
     return (
@@ -34,7 +34,7 @@ export const AppSidebarNav = ({ items }) => {
 
     return (
       <Component
-        {...(rest.to &&
+        {...(rest.href &&
           !rest.items && {
             component: NavLink,
           })}
@@ -45,15 +45,17 @@ export const AppSidebarNav = ({ items }) => {
       </Component>
     )
   }
+
   const navGroup = (item, index) => {
-    const { component, name, icon, to, ...rest } = item
+    console.log('navGroup', item)
+    const { component, name, icon, href, ...rest } = item
     const Component = component
     return (
       <Component
         idx={String(index)}
         key={index}
         toggler={navLink(name, icon)}
-        visible={location.pathname.startsWith(to)}
+        visible={location.startsWith(href)}
         {...rest}
       >
         {item.items?.map((item, index) =>

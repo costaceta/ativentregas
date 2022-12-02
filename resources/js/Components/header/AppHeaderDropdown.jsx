@@ -62,10 +62,10 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem> */}
-        <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
+        <CDropdownHeader className="bg-light fw-semibold py-2">Configurações</CDropdownHeader>
         <CDropdownItem className="dropdown-item" href={route('profile.edit')}>
           <CIcon icon={cilUser} className="me-2" />
-          Profile
+          Perfil
         </CDropdownItem>
         {/* <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
@@ -88,7 +88,7 @@ const AppHeaderDropdown = () => {
         <CDropdownDivider />
         <CDropdownItem className="dropdown-item" method="post" href={route('logout')} as="button">
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          Sair
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
