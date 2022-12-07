@@ -27,4 +27,4 @@ Os commits irão seguir o padrão Convencional commits
 
 ## Dependências
 
-- **[Laravel Mapbox](https://github.com/koossaayy/laravel-mapbox)**
+- **[React DatePicker](https://reactdatepicker.com/)**

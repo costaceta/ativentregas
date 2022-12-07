@@ -29,6 +29,89 @@ const _nav = [
     href: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
+  {
+    component: CNavGroup,
+    name: 'Atividades',
+    href: '/activities',
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Cadastro de atividades',
+        href: '/activities',
+      },
+      {
+        component: CNavItem,
+        name: 'Tipos de atividades',
+        href: '/activities-types',
+      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Breadcrumb',
+      //   href: '/base/breadcrumbs',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Cards',
+      //   href: '/base/cards',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Carousel',
+      //   href: '/base/carousels',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Collapse',
+      //   href: '/base/collapses',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'List group',
+      //   href: '/base/list-groups',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Navs & Tabs',
+      //   href: '/base/navs',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Pagination',
+      //   href: '/base/paginations',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Placeholders',
+      //   href: '/base/placeholders',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Popovers',
+      //   href: '/base/popovers',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Progress',
+      //   href: '/base/progress',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Spinners',
+      //   href: '/base/spinners',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Tables',
+      //   href: '/base/tables',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Tooltips',
+      //   href: '/base/tooltips',
+      // },
+    ],
+  },
   // {
   //   component: CNavTitle,
   //   name: 'Theme',

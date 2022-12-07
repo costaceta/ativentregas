@@ -47,7 +47,6 @@ export const AppSidebarNav = ({ items }) => {
   }
 
   const navGroup = (item, index) => {
-    console.log('navGroup', item)
     const { component, name, icon, href, ...rest } = item
     const Component = component
     return (

@@ -3,7 +3,7 @@ import { CContainer, CSpinner } from '@coreui/react'
 
 const AppContent = ({ children }) => {
   return (
-    <CContainer lg>
+    <CContainer fluid>
       <Suspense fallback={<CSpinner color="primary" />}>
         {children}
       </Suspense>

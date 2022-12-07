@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\ActivityTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,13 +28,15 @@ Route::get('/', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('welcome');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/coreui', function () {
-    return Inertia::render('Coreui/Index');
-})->middleware(['auth', 'verified'])->name('coreui');
+Route::resource('/activities', ActivitiesController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('/activities-types', ActivityTypeController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

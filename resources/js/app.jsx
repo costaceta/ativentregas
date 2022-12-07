@@ -1,11 +1,12 @@
 import './bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 // TODO: Remove this
 import '../css/app.css';
 
-import '../scss/style.scss'
+import '../scss/style.scss';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
