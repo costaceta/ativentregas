@@ -98,6 +98,8 @@ export default function Dashboard(props) {
                                 <CCard className="mb-3">
                                     <CCardHeader>
                                         {/* <CBadge color="primary">1</CBadge>  */}
+
+                                        <strong>#ID { activitity.id } </strong>
                                         Lorem ipsum dolor
                                     </CCardHeader>
                                     {/* <CCardBody>
