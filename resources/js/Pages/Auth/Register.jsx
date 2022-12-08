@@ -6,6 +6,9 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
+// TODO: Remove this
+import '../../../css/app.css';
+
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',

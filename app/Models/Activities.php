@@ -12,7 +12,7 @@ class Activities extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'activity_type',
+        'activity_type_id',
         'order_date',
         'code',
         'message',

@@ -35,7 +35,7 @@ Route::resource('/activities', ActivitiesController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('/activities-types', ActivityTypeController::class)
-    ->only(['index', 'store'])
+    ->only(['index','create', 'store'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {

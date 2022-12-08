@@ -15,8 +15,10 @@ class ActivityTypeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('ActivityType/Index', [
+        $activity_types     = ActivityType::orderBy('created_at', 'desc')->get();
 
+        return Inertia::render('ActivityType/Index', [
+            'activity_types' => $activity_types,
         ]);
     }
 
@@ -27,7 +29,7 @@ class ActivityTypeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('ActivityType/Create', []);
     }
 
     /**
@@ -38,7 +40,19 @@ class ActivityTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "title" => 'required',
+        ]);
+
+        $activity = ActivityType::create([
+            'title'      => $request->title,
+            'visibility' => $request->visibility,
+            'order'      => $request->order,
+            'image'      => $request->image,
+            'active'     => $request->active,
+        ]);
+
+        return redirect()->route('activities-types.index')->with('message','Tipo de atividade criada com sucesso!');
     }
 
     /**

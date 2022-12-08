@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('activity_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('activity_type_id');
-            $table->dateTime('order_date');
-            $table->string('code');
-            $table->string('message')->nullable();
+            $table->string('title');
+            $table->string('visibility')->nullable();
+            $table->integer('order')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('active')->nullable();
             $table->timestamps();
-
-            $table->foreign('activity_type_id')->references('id')->on('activity_types');
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('activity_types');
     }
 };

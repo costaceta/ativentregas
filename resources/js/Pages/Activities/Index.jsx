@@ -18,12 +18,15 @@ import {
     CForm,
     CAlert,
 } from '@coreui/react';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Index(props) {
-    const { activities } = props;
+    const { activities, activity_types } = props;
+
+    console.log("activity_types", activity_types);
 
     const { data, setData, post, processing, reset, errors  } = useForm({
-        activity_type: '',
+        activity_type_id: '',
         order_date: new Date(),
         code: generateActivityCode(),
         message: '',
@@ -35,6 +38,7 @@ export default function Index(props) {
         e.preventDefault();
         // TODO: Validate fiels in front end to
 
+        console.log(data)
         post(route('activities.store'), { onSuccess: () => reset() });
     };
 
@@ -45,6 +49,7 @@ export default function Index(props) {
                 errors={props.errors}
             >
                 <Head title="Cadastro de Atividades" />
+                { console.log(props.errors) }
                 <CRow>
                     <h3>Cadastro de Atividades</h3>
                     {
@@ -75,19 +80,22 @@ export default function Index(props) {
 
                                             <CFormSelect
                                                 value={data.activity_type}
-                                                onChange={ e => setData('activity_type', e.target.value) }
+                                                onChange={ e => setData('activity_type_id', Number(e.target.value)) }
                                                 label="Tipo de atividade:"
                                                 feedbackInvalid="Tipo de atividade é um campo obrigatório!"
                                                 required
-                                                invalid={ errors.activity_type && true }
+                                                invalid={ errors.activity_type_id && true }
                                             >
-                                                <option value="">Selecione um tipo de atividade</option>
-                                                <option value="1">00 - JORNADA DE TRABALHO</option>
-                                                <option value="2">01 - ANALISE DE PDV</option>
+                                                {/* TODO: Change text vazio */}
+                                                <option value="vazio">Selecione um tipo de atividade</option>
+                                                { activity_types && activity_types.map( type => (
+                                                    <option key={type.id} value={type.id}>{ type.title }</option>
+                                                )) }
+                                                {/* <option value="2">01 - ANALISE DE PDV</option>
                                                 <option value="3">02 - MR EMBALAGENS</option>
                                                 <option value="4">ATENDIMENTO DE LOCACAO</option>
                                                 <option value="5">ATIVIDADE DE ENTREGA</option>
-                                                <option value="6">ATIVIDADE PADRÃO</option>
+                                                <option value="6">ATIVIDADE PADRÃO</option> */}
                                             </CFormSelect>
                                         </CCol>
 
@@ -127,7 +135,6 @@ export default function Index(props) {
                                             {/* <InputError message={errors.activity_type} className="mt-2" /> */}
                                         </CCol>
 
-
                                     </CRow>
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                         <PrimaryButton className="mt-4" processing={processing}>Criar atividade</PrimaryButton>
@@ -137,7 +144,7 @@ export default function Index(props) {
                         </CCard>
                     </CCol>
 
-                    {/* <CCol sm={12} lg={4}>
+                    <CCol sm={12} lg={4}>
                         { activities && activities.map( activity => (
                             <CCard key={activity.id} className="mb-3">
                                 <CCardBody>
@@ -159,7 +166,7 @@ export default function Index(props) {
                                 </CCardBody>
                             </CCard>
                         ) )  }
-                    </CCol> */}
+                    </CCol>
                 </CRow>
             </AuthenticatedBase>
         </>

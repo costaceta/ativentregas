@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activities;
+use App\Models\ActivityType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class ActivitiesController extends Controller
@@ -15,10 +17,12 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        $activities = Activities::orderBy('created_at', 'desc')->get();
+        $activities     = Activities::orderBy('created_at', 'desc')->get();
+        $activity_types = DB::table('activity_types')->select('id', 'title')->orderBy('order')->get();
 
         return Inertia::render('Activities/Index', [
-            'activities' => $activities
+            'activities' => $activities,
+            'activity_types' => $activity_types,
         ]);
     }
 
@@ -40,14 +44,15 @@ class ActivitiesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
-            "activity_type" => 'required',
+            "activity_type_id" => 'required',
             "order_date" => 'required',
             "code" => 'required',
         ]);
 
         $activity = Activities::create([
-            'activity_type' => $request->activity_type,
+            'activity_type_id' => $request->activity_type_id,
             'order_date' => date('Y-m-d H:i:s' , strtotime($request->order_date)),
             'code' => $request->code,
             'message' => $request->message,

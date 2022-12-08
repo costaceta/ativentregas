@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import mapboxgl from 'mapbox-gl';
 
-import { Head } from '@inertiajs/inertia-react';
+import { Head, Link } from '@inertiajs/inertia-react';
 
 import { cilCalendarCheck } from "@coreui/icons";
 import CIcon from '@coreui/icons-react';
@@ -12,7 +12,9 @@ import {
     CCard,
     CCardHeader,
     CCardBody,
-    CBadge
+    CBadge,
+    CAlert,
+    CAlertLink
 } from '@coreui/react';
 
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
@@ -83,32 +85,40 @@ export default function Dashboard(props) {
                         </CCardBody>
                     </CCard> */}
 
-                    <CCard className="mb-2">
-                        <CCardHeader>
-                            <CIcon
-                                className="mr-2"
-                                icon={cilCalendarCheck}
-                            />
-                            <strong>
-                               ATIVIDADES SEM ENDEREÇO
-                            </strong>
-                        </CCardHeader>
-                        <CCardBody>
-                            { activities && activities.map( activitity => (
-                                <CCard className="mb-3">
-                                    <CCardHeader>
-                                        {/* <CBadge color="primary">1</CBadge>  */}
+                    { activities.length > 0 ? (
+                        <CCard className="mb-2">
+                            <CCardHeader>
+                                <CIcon
+                                    className="me-2"
+                                    icon={cilCalendarCheck}
+                                />
+                                <strong>
+                                ATIVIDADES SEM ENDEREÇO
+                                </strong>
+                            </CCardHeader>
+                            <CCardBody>
+                            <div class="overflow-auto" style={{ maxHeight: '300px' }}>
+                                { activities && activities.map( activitity => (
+                                    <CCard className="mb-3">
+                                        <CCardHeader>
+                                            {/* <CBadge color="primary">1</CBadge>  */}
 
-                                        <strong>#ID { activitity.id } </strong>
-                                        Lorem ipsum dolor
-                                    </CCardHeader>
-                                    {/* <CCardBody>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                    </CCardBody> */}
-                                </CCard>
-                            ))}
-                        </CCardBody>
-                    </CCard>
+                                            <strong>#ID { activitity.id } </strong>
+                                            Lorem ipsum dolor
+                                        </CCardHeader>
+                                        {/* <CCardBody>
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                        </CCardBody> */}
+                                    </CCard>
+                                ))}
+                            </div>
+                            </CCardBody>
+                        </CCard>
+                    ) : (
+                        <CAlert color="primary">
+                            Cadastre sua primeira atividade <Link className="alert-link" href="/activities">clique aqui</Link>
+                        </CAlert>
+                    ) }
 {/*
                     <CCard className="mb-2">
                         <CCardHeader>
