@@ -6,6 +6,13 @@
 - Mysql
 - Laravel
 
+## Iniciar aplicação
+
+- Iniciar o xampp
+- Iniciar o servidor do laravel - ``` php artisan serve ```
+- Iniciar o vite (Javascript) - ``` npm run dev ```
+- Acessar a aplicação em - **localhost:8000**
+
 ## Template frontend
 
 - **[Core UI](https://coreui.io/react/)**
