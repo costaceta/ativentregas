@@ -50,11 +50,12 @@ export const AppSidebarNav = ({ items }) => {
     const { component, name, icon, href, ...rest } = item
     const Component = component
     return (
+      // TODO: resolve startsWith
       <Component
         idx={String(index)}
         key={index}
         toggler={navLink(name, icon)}
-        visible={location.startsWith(href)}
+        // visible={location.startsWith(href)}
         {...rest}
       >
         {item.items?.map((item, index) =>
