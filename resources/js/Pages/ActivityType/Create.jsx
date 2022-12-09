@@ -108,7 +108,6 @@ export default function Index(props) {
                                 <CAccordionBody>
                                     <CRow>
                                         <CCol className="mb-3" md={12}>
-                                            
                                             <CFormSelect label="Código da atividade ?" aria-label="Default select example">
                                                 <option value="1">Obrigatório, inicia preenchido com um código padrão</option>
                                                 <option value="2">Obrigatório, inicia vazio</option>
@@ -181,7 +180,7 @@ export default function Index(props) {
                                                 </CFormSelect>
                                         </CCol>
 
-                                        
+
                                     </CRow>
                                 </CAccordionBody>
                             </CAccordionItem>
@@ -229,7 +228,7 @@ export default function Index(props) {
                                                     </CFormSelect>
 
                                         </CCol>
-                                        
+
                                     </CRow>
                                 </CAccordionBody>
                             </CAccordionItem>

@@ -26,18 +26,84 @@ export default function Dashboard(props) {
     const { activities } = props;
 
     const mapContainer = useRef(null);
-    const map = useRef(null);
+
     const [lng, setLng] = useState(-38.5187);
     const [lat, setLat] = useState(-3.7262);
     const [zoom, setZoom] = useState(12);
 
+    const [local, setLocal] = useState([
+        [
+            -38.519813489870415,
+            -3.725876869515446
+        ],
+        [
+            -38.50264174648976,
+            -3.718851307519259
+        ],
+        [
+            -38.4892477866527,
+            -3.7263909328251543
+        ],
+        [
+            -38.50143972445292,
+            -3.7476386197018456
+        ],
+        [
+            -38.55810647760978,
+            -3.7428407999317272
+        ],
+        [
+            -38.519813489870415,
+            -3.725876869515446
+        ]
+    ]);
+
+
     useEffect(() => {
-        if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
+        // if (map.current) return; // initialize map only once
+        const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v12",
             center: [lng, lat],
             zoom: zoom,
+        });
+
+        map.on("load", () => {
+            // Add a data source containing GeoJSON data.
+            map.addSource("maine", {
+                type: "geojson",
+                data: {
+                    type: "Feature",
+                    geometry: {
+                        type: "Polygon",
+                        // These coordinates outline Maine.
+                        coordinates: local,
+                    },
+                },
+            });
+
+            // Add a new layer to visualize the polygon.
+            map.addLayer({
+                id: "maine",
+                type: "fill",
+                source: "maine", // reference the data source
+                layout: {},
+                paint: {
+                    "fill-color": "#0080ff", // blue color fill
+                    "fill-opacity": 0.5,
+                },
+            });
+            // Add a black outline around the polygon.
+            map.addLayer({
+                id: "outline",
+                type: "line",
+                source: "maine",
+                layout: {},
+                paint: {
+                    "line-color": "#000",
+                    "line-width": 3,
+                },
+            });
         });
     });
 
