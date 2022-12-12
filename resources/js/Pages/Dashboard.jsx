@@ -31,36 +31,74 @@ export default function Dashboard(props) {
     const [lat, setLat] = useState(-3.7262);
     const [zoom, setZoom] = useState(12);
 
-    const [local, setLocal] = useState([
-        [
-            -38.519813489870415,
-            -3.725876869515446
+    const areas = {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': "Feature",
+                'geometry': {
+                    'type': "Polygon",
+                    'coordinates': [
+                        [
+                            [
+                                -38.522094521525474,
+                                -3.7570221591734736
+                            ],
+                            [
+                                -38.51687997640599,
+                                -3.71109583702669
+                            ],
+                            [
+                                -38.62049072072628,
+                                -3.685982402880853
+                            ],
+                            [
+                                -38.62389151102167,
+                                -3.758153318991873
+                            ],
+                            [
+                                -38.522094521525474,
+                                -3.7570221591734736
+                            ]
+                        ]
+                    ]
+                },
+            },
+            {
+                'type': "Feature",
+                'geometry': {
+                    'type': "Polygon",
+                    'coordinates': [
+                        [
+                            [
+                                -38.621041606791294,
+                                -3.685177681824854
+                            ],
+                            [
+                                -38.712414789004015,
+                                -3.6378474613396037
+                            ],
+                            [
+                                -38.72720854231454,
+                                -3.7585562443315723
+                            ],
+                            [
+                                -38.62495760031476,
+                                -3.757687894834504
+                            ],
+                            [
+                                -38.621041606791294,
+                                -3.685177681824854
+                            ]
+                        ]
+                    ]
+                },
+            },
         ],
-        [
-            -38.50264174648976,
-            -3.718851307519259
-        ],
-        [
-            -38.4892477866527,
-            -3.7263909328251543
-        ],
-        [
-            -38.50143972445292,
-            -3.7476386197018456
-        ],
-        [
-            -38.55810647760978,
-            -3.7428407999317272
-        ],
-        [
-            -38.519813489870415,
-            -3.725876869515446
-        ]
-    ]);
-
+    }
 
     useEffect(() => {
-        // if (map.current) return; // initialize map only once
+        if(!mapContainer.current) return;
         const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v12",
@@ -69,35 +107,15 @@ export default function Dashboard(props) {
         });
 
         map.on("load", () => {
-            // Add a data source containing GeoJSON data.
-            map.addSource("maine", {
+            map.addSource("map-areas", {
                 type: "geojson",
-                data: {
-                    type: "Feature",
-                    geometry: {
-                        type: "Polygon",
-                        // These coordinates outline Maine.
-                        coordinates: local,
-                    },
-                },
+                data: areas,
             });
 
-            // Add a new layer to visualize the polygon.
             map.addLayer({
-                id: "maine",
-                type: "fill",
-                source: "maine", // reference the data source
-                layout: {},
-                paint: {
-                    "fill-color": "#0080ff", // blue color fill
-                    "fill-opacity": 0.5,
-                },
-            });
-            // Add a black outline around the polygon.
-            map.addLayer({
-                id: "outline",
+                id: "map-areas-outline",
                 type: "line",
-                source: "maine",
+                source: "map-areas",
                 layout: {},
                 paint: {
                     "line-color": "#000",
@@ -106,15 +124,6 @@ export default function Dashboard(props) {
             });
         });
     });
-
-    // useEffect(() => {
-    //     if (!map.current) return; // wait for map to initialize
-    //     map.current.on("move", () => {
-    //         setLng(map.current.getCenter().lng.toFixed(4));
-    //         setLat(map.current.getCenter().lat.toFixed(4));
-    //         setZoom(map.current.getZoom().toFixed(2));
-    //     });
-    // });
 
     return (
         <AuthenticatedBase
@@ -129,28 +138,6 @@ export default function Dashboard(props) {
             <CRow className="align-items-start">
                 <CCol  lg={3}>
                     {/* TODO: Separar listagem de atividades em um componente! */}
-                    {/* <CCard className="mb-2">
-                        <CCardHeader>
-                            <CIcon
-                                className="mr-2"
-                                icon={cilCalendarCheck}
-                            />
-                            <strong>
-                                FORA DE ÁREA
-                            </strong>
-                        </CCardHeader>
-                        <CCardBody>
-                            <CCard>
-                                <CCardHeader>
-                                    <CBadge color="primary">1</CBadge> Lorem ipsum dolor
-                                </CCardHeader>
-                                <CCardBody>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                </CCardBody>
-                            </CCard>
-                        </CCardBody>
-                    </CCard> */}
-
                     { activities.length > 0 ? (
                         <CCard className="mb-2">
                             <CCardHeader>
