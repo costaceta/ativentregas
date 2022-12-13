@@ -13,6 +13,8 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
+  CButtonGroup,
+  CButton,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
@@ -20,10 +22,20 @@ import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import { logo } from '../../assets/brand/logo'
+import LayoutToggleButtons from './HeaderToggleButtons';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const [isDashbord, setIsDashboard] = useState(false)
+
+  useEffect( () => {
+    if(route().current() === 'dashboard') {
+      setIsDashboard(true)
+    }
+  })
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -82,6 +94,9 @@ const AppHeader = () => {
       <CHeaderDivider />
       <CContainer fluid>
         {/* <AppBreadcrumb /> */}
+        { isDashbord && (
+          <LayoutToggleButtons />
+        )}
       </CContainer>
     </CHeader>
   )
