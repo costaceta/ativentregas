@@ -15,6 +15,9 @@ import 'simplebar/dist/simplebar.min.css'
 // sidebar nav config
 import navigation from '../_nav';
 
+import logoSmall from '../../assets/brand/logo-ative-small.png';
+import logoDark from '../../assets/brand/logo-ative-dark.png';
+
 const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
@@ -30,8 +33,10 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
+        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
+        {/* <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
+        <img className="sidebar-brand-full" src={logoDark} height={35} alt="" />
+        <img className="sidebar-brand-narrow" src={logoSmall} height={35} alt="" />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
