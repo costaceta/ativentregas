@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import mapboxgl from 'mapbox-gl';
 
+import "mapbox-gl/dist/mapbox-gl.css";
+
 import { Head, Link } from '@inertiajs/inertia-react';
 
 import { cilCalendarCheck } from "@coreui/icons";
@@ -269,7 +271,7 @@ export default function Dashboard(props) {
                         </div> */}
                         <div
                             ref={mapContainer}
-                            className="map-container"
+                            style={{ minHeight: 700 }}
                         />
                     </div>
                 </CCol>
