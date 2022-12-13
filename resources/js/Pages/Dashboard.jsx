@@ -1,12 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-import mapboxgl from 'mapbox-gl';
-
-import "mapbox-gl/dist/mapbox-gl.css";
-
 import { Head, Link } from '@inertiajs/inertia-react';
 
-import { cilCalendarCheck } from "@coreui/icons";
+import { cilCalendarCheck, cilPlus, cilSearch } from "@coreui/icons";
 import CIcon from '@coreui/icons-react';
 import {
     CRow,
@@ -16,14 +12,25 @@ import {
     CCardBody,
     CBadge,
     CAlert,
-    CAlertLink
+    CAlertLink,
+    CButtonGroup,
+    CButton,
+    CDropdown,
+    CDropdownToggle,
+    CDropdownMenu,
+    CDropdownItem,
+    CDropdownDivider,
+    CModal,
+    CModalHeader,
+    CModalTitle,
+    CModalBody,
+    CModalFooter
 } from '@coreui/react';
 
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
 import { useDispatch, useSelector } from 'react-redux';
+import DashboardMap from '@/Components/maps/DashboardMap';
 
-// TODO: Add token to environment variables
-mapboxgl.accessToken = 'pk.eyJ1IjoicmNvc3Rhd2ViIiwiYSI6ImNsYTdha2pkYjExa3Azdm44NTd2bngycnYifQ.Jtaq7_aB-ZoYgJfgB8GCqw';
 
 export default function Dashboard(props) {
     const { activities } = props;
@@ -32,125 +39,7 @@ export default function Dashboard(props) {
     const showDashboardCenter = useSelector( (state) => state.showDashboardCenter )
     const showDashboardRight = useSelector( (state) => state.showDashboardRight )
 
-    const mapContainer = useRef(null);
-
-    const [lng, setLng] = useState(-38.5187);
-    const [lat, setLat] = useState(-3.7262);
-    const [zoom, setZoom] = useState(12);
-
-    const areas = {
-        'type': 'FeatureCollection',
-        'features': [
-            {
-                'type': "Feature",
-                'geometry': {
-                    'type': "Polygon",
-                    'coordinates': [
-                        [
-                            [
-                                -38.522094521525474,
-                                -3.7570221591734736
-                            ],
-                            [
-                                -38.51687997640599,
-                                -3.71109583702669
-                            ],
-                            [
-                                -38.62049072072628,
-                                -3.685982402880853
-                            ],
-                            [
-                                -38.62389151102167,
-                                -3.758153318991873
-                            ],
-                            [
-                                -38.522094521525474,
-                                -3.7570221591734736
-                            ]
-                        ]
-                    ]
-                },
-            },
-            {
-                'type': "Feature",
-                'geometry': {
-                    'type': "Polygon",
-                    'coordinates': [
-                        [
-                            [
-                                -38.621041606791294,
-                                -3.685177681824854
-                            ],
-                            [
-                                -38.712414789004015,
-                                -3.6378474613396037
-                            ],
-                            [
-                                -38.72720854231454,
-                                -3.7585562443315723
-                            ],
-                            [
-                                -38.62495760031476,
-                                -3.757687894834504
-                            ],
-                            [
-                                -38.621041606791294,
-                                -3.685177681824854
-                            ]
-                        ]
-                    ]
-                },
-            },
-        ],
-    }
-
-    useEffect(() => {
-        if(!mapContainer.current) return;
-        const map = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: "mapbox://styles/mapbox/streets-v12",
-            center: [lng, lat],
-            zoom: zoom,
-        });
-
-        map.on("load", () => {
-            map.addSource("map-areas", {
-                type: "geojson",
-                data: areas,
-            });
-
-            map.addLayer({
-                id: "map-areas-outline",
-                type: "line",
-                source: "map-areas",
-                layout: {},
-                paint: {
-                    "line-color": "#000",
-                    "line-width": 3,
-                },
-            });
-        });
-    });
-
-    const leftCol = () => {
-        if(!showDashboardCenter || !showDashboardRight) {
-            return 12;
-        } else if (showDashboardCenter || !showDashboardRight) {
-            return 6;
-        } else {
-            return 3;
-        }
-    }
-
-    const rightCol = () => {
-        if(!showDashboardCenter || !showDashboardLeft) {
-            return 12;
-        } else if (showDashboardCenter || !showDashboardLeft) {
-            return 6;
-        } else {
-            return 3;
-        }
-    }
+    const [visible, setVisible] = useState(false)
 
     return (
         <AuthenticatedBase
@@ -163,6 +52,72 @@ export default function Dashboard(props) {
             <CRow className="align-items-start">
                 { showDashboardLeft && (
                     <CCol>
+                        <div className="d-grid gap-2 d-md-flex justify-content-center mb-3">
+                            <CButtonGroup className="" role="group" aria-label="Button group with nested dropdown">
+                                <CButton
+                                    type="button"
+                                    color="primary"
+                                    onClick={() => setVisible(!visible)}
+                                >
+                                    <CIcon
+                                        icon={cilPlus}
+                                    />
+                                </CButton>
+                                <CButton type="button" color="primary">
+                                    <CIcon
+                                        icon={cilSearch}
+                                    />
+                                </CButton>
+                                <CDropdown variant="btn-group">
+                                    <CDropdownToggle type="button" color="primary">
+                                        Atividades (0)
+                                    </CDropdownToggle>
+                                    <CDropdownMenu>
+                                        <CDropdownItem href="#">
+                                            Cadastrar
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Busca avançada
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Cancelar
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Adiar
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Pendências
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Programadas
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Informar registro do caixa
+                                        </CDropdownItem>
+                                        <CDropdownItem href="#">
+                                            Trazer atividade via integração
+                                        </CDropdownItem>
+                                        {/* <CDropdownDivider /> */}
+                                        {/* <CDropdownItem href="#">Separated link</CDropdownItem> */}
+                                    </CDropdownMenu>
+                                </CDropdown>
+                            </CButtonGroup>
+
+                            <CModal size="xl" visible={visible} onClose={() => setVisible(false)}>
+                                <CModalHeader onClose={() => setVisible(false)}>
+                                    <CModalTitle>CADASTRO DE ATIVIDADE</CModalTitle>
+                                </CModalHeader>
+                                <CModalBody>
+                                    Aqui vão os campos do cadastro de Atividade
+                                </CModalBody>
+                                <CModalFooter>
+                                    <CButton color="secondary" onClick={() => setVisible(false)}>
+                                        Fechar
+                                    </CButton>
+                                    <CButton color="primary">Salvar</CButton>
+                                </CModalFooter>
+                            </CModal>
+                        </div>
                         {/* TODO: Separar listagem de atividades em um componente! */}
                         { activities.length > 0 ? (
                             <CCard className="mb-2">
@@ -291,16 +246,7 @@ export default function Dashboard(props) {
 
                 { showDashboardCenter && (
                     <CCol  lg={ !showDashboardLeft && !showDashboardRight ? 12 : 6 }>
-                        {/* TODO: Separar Mapa em um componente! */}
-                        <div className="map-wrapper">
-                            {/* <div className="sidebarStyle">
-                                Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-                            </div> */}
-                            <div
-                                ref={mapContainer}
-                                style={{ minHeight: 700 }}
-                            />
-                        </div>
+                        <DashboardMap />
                     </CCol>
                 ) }
 
