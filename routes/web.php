@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -55,6 +56,10 @@ Route::get('/form-model', function () {
 Route::get('/form-fields', function () {
     return Inertia::render('FormFiels/Index', []);
 })->middleware(['auth', 'verified']);
+
+Route::resource('/suppliers', SupplierController::class)
+    ->only(['index', 'store'])
+    ->middleware(['auth', 'verified']);
 
 /*** RELATÓRIOS ***/
 Route::get('/team-productivity', function () {
