@@ -131,9 +131,9 @@ export default function Dashboard(props) {
                                     </strong>
                                 </CCardHeader>
                                 <CCardBody>
-                                <div class="overflow-auto" style={{ maxHeight: '300px' }}>
+                                <div className="overflow-auto" style={{ maxHeight: '300px' }}>
                                     { activities && activities.map( activitity => (
-                                        <CCard className="mb-3">
+                                        <CCard key={ activitity.id } className="mb-3">
                                             <CCardHeader>
                                                 {/* <CBadge color="primary">1</CBadge>  */}
 
