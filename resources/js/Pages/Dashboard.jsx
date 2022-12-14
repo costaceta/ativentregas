@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 import { Head, Link } from '@inertiajs/inertia-react';
 
@@ -24,7 +24,10 @@ import {
     CModalHeader,
     CModalTitle,
     CModalBody,
-    CModalFooter
+    CModalFooter,
+    CCollapse,
+    CInputGroup,
+    CFormInput
 } from '@coreui/react';
 
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
@@ -40,6 +43,7 @@ export default function Dashboard(props) {
     const showDashboardRight = useSelector( (state) => state.showDashboardRight )
 
     const [visible, setVisible] = useState(false)
+    const [searchVisible, setSearchVisible] = useState(false)
 
     return (
         <AuthenticatedBase
@@ -63,7 +67,11 @@ export default function Dashboard(props) {
                                         icon={cilPlus}
                                     />
                                 </CButton>
-                                <CButton type="button" color="primary">
+                                <CButton
+                                    type="button"
+                                    color="primary"
+                                    onClick={ () => setSearchVisible(!searchVisible) }
+                                >
                                     <CIcon
                                         icon={cilSearch}
                                     />
@@ -118,6 +126,27 @@ export default function Dashboard(props) {
                                 </CModalFooter>
                             </CModal>
                         </div>
+
+                        <CCollapse visible={searchVisible}>
+                            <CCard className="mb-3">
+                                <CCardBody>
+                                    {/* TODO: Criar a lógica da busca */}
+                                    <CInputGroup>
+                                        <CFormInput
+                                            placeholder="Buscar atividade..."
+                                            aria-label="Buscar atividade..."
+                                            aria-describedby="button-addon2"
+                                        />
+                                        <CButton type="button" color="secondary" variant="outline" id="button-addon2">
+                                            <CIcon
+                                                icon={cilSearch}
+                                            />
+                                        </CButton>
+                                    </CInputGroup>
+                                </CCardBody>
+                            </CCard>
+                        </CCollapse>
+
                         {/* TODO: Separar listagem de atividades em um componente! */}
                         { activities.length > 0 ? (
                             <CCard className="mb-2">
