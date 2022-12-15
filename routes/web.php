@@ -61,6 +61,11 @@ Route::resource('/suppliers', SupplierController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
+Route::get('/usuarios-moveis', function () {
+    return Inertia::render('UsuariosMoveis/Index', []);
+});
+
+
 /*** RELATÓRIOS ***/
 Route::get('/team-productivity', function () {
     return Inertia::render('TeamProductivity/Index', []);

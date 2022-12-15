@@ -61,6 +61,11 @@ const _nav = [
       },
       {
         component: CNavItem,
+        name: 'Usuários Móveis',
+        href: '/usuarios-moveis',
+      },
+      {
+        component: CNavItem,
         name: 'Campos de formulários',
         href: '/form-fields',
       },
