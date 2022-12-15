@@ -76,11 +76,6 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Usuários móveis',
-        href: '/mobile-users',
-      },
-      {
-        component: CNavItem,
         name: 'Atividades Frequentes',
         href: '/suppliers',
       },

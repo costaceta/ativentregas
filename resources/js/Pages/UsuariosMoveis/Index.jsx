@@ -1,10 +1,21 @@
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
 import { CTable,CTableHead, CTableHeaderCell, CTableRow, CTableBody, CTableDataCell, CCard, CCardBody, CButton} from '@coreui/react'
+import { Link } from '@inertiajs/inertia-react';
 
 export default function index() {
     return (
         <AuthenticatedBase>
-            <h3 className="mb-3">Usuários Móveis</h3>
+            <div className="d-flex w-100 mb-3">
+
+                <h3>Usuários Móveis</h3>
+                <Link
+                    className="btn btn-primary ms-3"
+                    type="button"
+                    href={ route('usuarios-moveis.create') }
+                >
+                    Cadastrar
+                </Link>
+            </div>
             <CCard>
                 <CCardBody>
                     <CTable>
@@ -58,7 +69,7 @@ export default function index() {
                                 </CTableDataCell>
                             </CTableRow>
                         </CTableBody>
-        <           /CTable>
+                    </CTable>
                 </CCardBody>
             </CCard>
         </AuthenticatedBase>

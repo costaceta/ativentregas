@@ -5,6 +5,7 @@ use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UsuarioMovel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,10 +46,6 @@ Route::resource('/activities-types', ActivityTypeController::class)
     ->only(['index','create', 'store'])
     ->middleware(['auth', 'verified']);
 
-Route::get('/mobile-users', function () {
-    return Inertia::render('MobileUsers/Index', []);
-})->middleware(['auth', 'verified']);
-
 Route::get('/form-model', function () {
     return Inertia::render('FormModel/Index', []);
 })->middleware(['auth', 'verified']);
@@ -61,10 +58,9 @@ Route::resource('/suppliers', SupplierController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
-Route::get('/usuarios-moveis', function () {
-    return Inertia::render('UsuariosMoveis/Index', []);
-});
-
+Route::resource('/usuarios-moveis', UsuarioMovel::class)
+    ->only(['index', 'create', 'store'])
+    ->middleware(['auth', 'verified']);
 
 /*** RELATÓRIOS ***/
 Route::get('/team-productivity', function () {
