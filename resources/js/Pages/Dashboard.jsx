@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 import { Head, Link } from '@inertiajs/inertia-react';
 
-import { cilCalendarCheck, cilPlus, cilSearch } from "@coreui/icons";
+import { cilCalendarCheck, cilChevronRight, cilOptions, cilPlus, cilSearch } from "@coreui/icons";
 import CIcon from '@coreui/icons-react';
 import {
     CRow,
@@ -33,6 +33,7 @@ import {
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import DashboardMap from '@/Components/maps/DashboardMap';
+import ActivityCardItem from '@/Components/ActivityCardItem';
 
 
 export default function Dashboard(props) {
@@ -160,21 +161,11 @@ export default function Dashboard(props) {
                                     </strong>
                                 </CCardHeader>
                                 <CCardBody>
-                                <div className="overflow-auto" style={{ maxHeight: '300px' }}>
-                                    { activities && activities.map( activitity => (
-                                        <CCard key={ activitity.id } className="mb-3">
-                                            <CCardHeader>
-                                                {/* <CBadge color="primary">1</CBadge>  */}
-
-                                                <strong>#ID { activitity.id } </strong>
-                                                Lorem ipsum dolor
-                                            </CCardHeader>
-                                            {/* <CCardBody>
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                            </CCardBody> */}
-                                        </CCard>
-                                    ))}
-                                </div>
+                                    <div className="overflow-auto" style={{ maxHeight: '340px' }}>
+                                        { activities && activities.map( activitity => (
+                                            <ActivityCardItem key={activitity.id} activity={activitity} />
+                                        ))}
+                                    </div>
                                 </CCardBody>
                             </CCard>
                         ) : (

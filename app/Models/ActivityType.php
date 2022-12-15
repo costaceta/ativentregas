@@ -17,4 +17,9 @@ class ActivityType extends Model
         'image',
         'active'
     ];
+
+    public function options()
+    {
+        return $this->hasMany(ActivityOption::class);
+    }
 }

@@ -2,7 +2,20 @@ import React, { useState } from "react";
 import { Head, Link, useForm } from "@inertiajs/inertia-react";
 
 import {
-    CAccordion, CAccordionBody, CAccordionHeader, CAccordionItem, CCard, CCardFooter, CCardHeader, CCol, CForm, CFormInput, CFormSelect, CFormSwitch, CRow, CFormCheck
+    CAccordion,
+    CAccordionBody,
+    CAccordionHeader,
+    CAccordionItem,
+    CCard,
+    CCardFooter,
+    CCardHeader,
+    CCol,
+    CForm,
+    CFormInput,
+    CFormSelect,
+    CFormSwitch,
+    CRow,
+    CFormCheck
 } from "@coreui/react";
 
 import AuthenticatedBase from "@/Layouts/AuthenticatedBaseLayout";
@@ -562,10 +575,10 @@ export default function Index(props) {
                                         </CCol>
 
                                        </CRow>
-                                    
+
                                 </CAccordionBody>
                             </CAccordionItem>
-                            
+
                             <CAccordionItem itemKey={7}>
                                 <CAccordionHeader>PAINEL DE OPERAÇÃO WEB - NÚMEROS</CAccordionHeader>
                                 <CAccordionBody>

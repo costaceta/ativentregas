@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ActivityOption extends Model
 {
     use HasFactory;
+
+    public function activity_type()
+    {
+        return $this->belongsTo(ActivityType::class);
+    }
 }

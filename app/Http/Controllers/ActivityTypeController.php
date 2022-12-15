@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityOption;
 use App\Models\ActivityType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +16,14 @@ class ActivityTypeController extends Controller
      */
     public function index()
     {
-        $activity_types     = ActivityType::orderBy('created_at', 'desc')->get();
+        $activity_types = ActivityType::orderBy('created_at', 'desc')->get();
+
+        // $types = ActivityType::all();
+        // $option = ActivityOption::all();
+
+        // $type = ActivityType::find(1)->options;
+
+        $activity_types = ActivityType::all()->fresh('options');
 
         return Inertia::render('ActivityType/Index', [
             'activity_types' => $activity_types,
