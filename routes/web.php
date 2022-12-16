@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\ActivityOptionController;
 use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -46,6 +47,10 @@ Route::resource('/activities-types', ActivityTypeController::class)
     ->only(['index','create', 'store'])
     ->middleware(['auth', 'verified']);
 
+Route::resource('/activities-options', ActivityOptionController::class)
+    ->only(['store'])
+    ->middleware(['auth', 'verified']);
+
 Route::get('/form-model', function () {
     return Inertia::render('FormModel/Index', []);
 })->middleware(['auth', 'verified']);
@@ -70,7 +75,6 @@ Route::get('/team-productivity', function () {
 Route::get('/itineraries', function () {
     return Inertia::render('Itineraries/Index', []);
 })->middleware(['auth', 'verified']);
-
 
 
 Route::middleware('auth')->group(function () {

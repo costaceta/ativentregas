@@ -22,8 +22,7 @@ import { Inertia } from '@inertiajs/inertia';
 
 export default function Index(props) {
     const { activities, activity_types } = props;
-
-    console.log("activity_types", activity_types);
+    const [validated, setValidated] = useState(false)
 
     const { data, setData, post, processing, reset, errors  } = useForm({
         activity_type_id: '',
@@ -32,13 +31,8 @@ export default function Index(props) {
         message: '',
     });
 
-    const [validated, setValidated] = useState(false)
-
-    const submit = (e) => {
-        e.preventDefault();
-        // TODO: Validate fiels in front end to
-
-        console.log(data)
+    const createActivity = (event) => {
+        event.preventDefault();
         post(route('activities.store'), { onSuccess: () => reset() });
     };
 
@@ -70,7 +64,7 @@ export default function Index(props) {
                                     className="g-3 needs-validation"
                                     noValidate
                                     validated={validated}
-                                    onSubmit={submit}
+                                    onSubmit={createActivity}
                                 >
 
                                     {/* TODO: This field must to be a field with search becouse has many items */}

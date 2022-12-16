@@ -1,40 +1,36 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 
 import { Head, Link } from '@inertiajs/inertia-react';
 
-import { cilCalendarCheck, cilChevronRight, cilOptions, cilPlus, cilSearch } from "@coreui/icons";
+import { cilCalendarCheck, cilPlus, cilSearch } from "@coreui/icons";
 import CIcon from '@coreui/icons-react';
 import {
-    CRow,
-    CCol,
-    CCard,
-    CCardHeader,
-    CCardBody,
-    CBadge,
     CAlert,
-    CAlertLink,
-    CButtonGroup,
     CButton,
+    CButtonGroup,
+    CCard,
+    CCardBody,
+    CCardHeader,
+    CCol,
+    CCollapse,
     CDropdown,
-    CDropdownToggle,
-    CDropdownMenu,
     CDropdownItem,
-    CDropdownDivider,
+    CDropdownMenu,
+    CDropdownToggle,
+    CFormInput,
+    CInputGroup,
     CModal,
-    CModalHeader,
-    CModalTitle,
     CModalBody,
     CModalFooter,
-    CCollapse,
-    CInputGroup,
-    CFormInput
+    CModalHeader,
+    CModalTitle,
+    CRow
 } from '@coreui/react';
 
-import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
-import { useDispatch, useSelector } from 'react-redux';
-import DashboardMap from '@/Components/maps/DashboardMap';
 import ActivityCardItem from '@/Components/ActivityCardItem';
-
+import DashboardMap from '@/Components/maps/DashboardMap';
+import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
+import { useSelector } from 'react-redux';
 
 export default function Dashboard(props) {
     const { activities } = props;

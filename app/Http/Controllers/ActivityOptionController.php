@@ -35,7 +35,21 @@ class ActivityOptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        dd($request);
+        $request->validate([
+            "title" => 'required',
+        ]);
+
+        $activity = ActivityType::create([
+            'title'      => $request->title,
+            'visibility' => $request->visibility,
+            'order'      => $request->order,
+            'image'      => $request->image,
+            'active'     => $request->active,
+        ]);
+
+        return redirect()->route('activities-types.index')->with('message','Tipo de atividade criada com sucesso!');
     }
 
     /**
