@@ -13,16 +13,23 @@ import {
     CFormSelect,
     CFormSwitch, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow
 } from "@coreui/react";
+import { useEffect } from "react";
 
-const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible }) => {
+const CreateOption = ( props ) => {
     const [validated, setValidated] = useState(false);
 
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const { createOptionModalVisible, setCreateOptionModalVisible, typeID } = props;
+
+    useEffect(() => {
+        setData('activity_type_id', typeID)
+    }, [typeID])
+
+    const { data, setData, post, processing, reset, errors, transform } = useForm({
         title: "",
         description: "",
         visibility: 0,
         order: "10",
-        image: "",
+        activity_type_id: 0,
         active: true,
     });
 
@@ -33,8 +40,9 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
             onSuccess: () => {
                 reset();
                 setCreateOptionModalVisible(false);
+                setData('activity_type_id', typeID)
             },
-        });
+        } );
     };
 
     return (
@@ -45,7 +53,7 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
             onClose={() => setCreateOptionModalVisible(false)}
         >
             <CModalHeader>
-                <CModalTitle>Nova OPÇÃO de atividade</CModalTitle>
+                <CModalTitle>Nova opção de atividade</CModalTitle>
             </CModalHeader>
             <CModalBody>
                 <CForm
@@ -80,7 +88,7 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                             onChange={(e) =>
                                                 setData("description", e.target.value)
                                             }
-                                            label="Título"
+                                            label="Descrição"
                                             feedbackInvalid="Titulo é um campo obrigatório!"
                                             invalid={errors.description && true}
                                             required
@@ -106,6 +114,53 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                             </option>
                                             <option value="2">
                                                 Apenas no aplicativo móvel
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Lógica da opção"
+                                            value={data.logic}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "logic",
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="0">
+                                                0 - Tratamento genérico
+                                            </option>
+                                            <option value="1">
+                                                1 - Início da realização da atividade (Ex.: Chegada)
+                                            </option>
+                                            <option value="2">
+                                                2 - Fim da realização da atividade (COM SUCESSO)
+                                            </option>
+                                            <option value="3">
+                                                3 - Fim da realização da atividade (SEM SUCESSO). Anteriormente chamada de: Cancelamento da atividade
+                                            </option>
+                                            <option value="4">
+                                                4 - Adianta o processamento de notificações
+                                            </option>
+                                            <option value="5">
+                                                5 - Marcação de início de intervalo para almoço
+                                            </option>
+                                            <option value="6">
+                                                6 - Marcação de final de intervalo do almoço
+                                            </option>
+                                            <option value="7">
+                                                7 - Tempo em local - Marcação de início.
+                                            </option>
+                                            <option value="8">
+                                                8 - Tempo em local - Marcação de fim.
+                                            </option>
+                                            <option value="9">
+                                                9 - Marcação de serviço
+                                            </option>
+                                            <option value="10">
+                                                10 - A caminho
                                             </option>
                                         </CFormSelect>
                                     </CCol>
@@ -139,23 +194,26 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                 </CRow>
                             </CAccordionBody>
                         </CAccordionItem>
+
                         <CAccordionItem itemKey={2}>
                             <CAccordionHeader>
-                                CAMPOS DA ATIVIDADE
+                                FORMULÁRIO
                             </CAccordionHeader>
                             <CAccordionBody>
                                 <CRow>
                                     <CCol className="mb-3" md={12}>
                                         <CFormSelect
-                                            label="Código da atividade ?"
+                                            label="Tipo de entrada a ser exibida"
                                             aria-label="Default select example"
                                         >
+                                            <option value="0">
+                                                Sem obtenção de dados
+                                            </option>
                                             <option value="1">
-                                                Obrigatório, inicia preenchido
-                                                com um código padrão
+                                                Exibir entrada de dados mostrando uma janela com um único campo
                                             </option>
                                             <option value="2">
-                                                Obrigatório, inicia vazio
+                                                Exibir um formulário na mesma tela
                                             </option>
                                         </CFormSelect>
                                     </CCol>
@@ -268,1085 +326,8 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                 </CRow>
                             </CAccordionBody>
                         </CAccordionItem>
+
                         <CAccordionItem itemKey={3}>
-                            <CAccordionHeader>DISPLAYS</CAccordionHeader>
-                            <CAccordionBody>
-                                <CRow>
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Display 1 - no APP"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                0 - NÃO EXIBIR INFORMAÇÃO
-                                            </option>
-                                            <option value="1">
-                                                1 - logradouro, numero, bairro
-                                            </option>
-                                            <option value="2">
-                                                2 - logradouro, numero, bairro,
-                                                cidade/municipio
-                                            </option>
-                                            <option value="3">
-                                                3 - logradouro, numero, bairro,
-                                                (hora)
-                                            </option>
-                                            <option value="4">
-                                                4 - logradouro, numero, bairro,
-                                                cidade/municipio, (hora)
-                                            </option>
-                                            <option value="5">
-                                                5 - logradouro, numero, bairro,
-                                                (data hora)
-                                            </option>
-                                            <option value="6">
-                                                6 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora)
-                                            </option>
-                                            <option value="7">
-                                                7 - logradouro, numero, bairro,
-                                                (data hora para realização da
-                                                atividade)
-                                            </option>
-                                            <option value="8">
-                                                8 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="9">
-                                                9 - logradouro, numero,
-                                                complemento, bairro, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="10">
-                                                10 - Nome do tomador do serviço
-                                            </option>
-                                            <option value="11">
-                                                11 - Nome do tomador do serviço,
-                                                data hora da solicitação
-                                            </option>
-                                            <option value="12">
-                                                12 - Nome do tomador do serviço,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="13">
-                                                13 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="14">
-                                                14 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="15">
-                                                15 - Observações
-                                            </option>
-                                            <option value="16">
-                                                16 - Tipo atividade (código da
-                                                atividade), observação
-                                            </option>
-                                            <option value="33">
-                                                33 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="34">
-                                                34 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="35">
-                                                35 - Nome do tomador do serviço
-                                                (código da atividade)
-                                            </option>
-                                            <option value="36">
-                                                36 - Nome do tomador do serviço
-                                                (código da atividade), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="37">
-                                                37 - Nome do tomador do serviço
-                                                (código da atividade), telefone,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="38">
-                                                38 - Tipo atividade, Nome do
-                                                tomador do serviço (código da
-                                                atividade), telefone, hora da
-                                                solicitação
-                                            </option>
-                                            <option value="40">
-                                                40 - logradouro, numero,
-                                                complemento, bairro, observação
-                                            </option>
-                                            <option value="41">
-                                                41 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação
-                                            </option>
-                                            <option value="42">
-                                                42 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação, Vols.: #
-                                            </option>
-                                            <option value="45">
-                                                45 - Nome do usuário do sistema
-                                                que cadastrou a atividade -
-                                                observação
-                                            </option>
-                                            <option value="46">
-                                                46 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço
-                                            </option>
-                                            <option value="47">
-                                                47 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço -
-                                                observação
-                                            </option>
-                                            <option value="48">
-                                                48 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço (código da
-                                                atividade) - observação
-                                            </option>
-                                            <option value="50">
-                                                50 - Nome do usuário do sistema
-                                                que cadastrou a atividade
-                                            </option>
-                                            <option value="60">
-                                                60 - Razão Social do cliente
-                                            </option>
-                                            <option value="70">
-                                                70 - Código da atividade, data
-                                                hora da solicitação, origem
-                                            </option>
-                                            <option value="80">
-                                                80 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - observação
-                                            </option>
-                                            <option value="81">
-                                                81 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço
-                                            </option>
-                                            <option value="82">
-                                                82 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - observação
-                                            </option>
-                                            <option value="83">
-                                                83 - Nome fantasia da
-                                                loja/endereço de origem - Razão
-                                                social cliente - Telefone
-                                            </option>
-                                            <option value="84">
-                                                84 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - Telefone
-                                            </option>
-                                            <option value="90">
-                                                90 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="91">
-                                                91 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Vendedor
-                                            </option>
-                                            <option value="92">
-                                                92 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Usuário que cadastrou a
-                                                atividade
-                                            </option>
-                                            <option value="100">
-                                                100 - Código do cliente - Razão
-                                                social do cliente
-                                            </option>
-                                            <option value="101">
-                                                101 - Código do cliente - Nome
-                                                fantasia do cliente
-                                            </option>
-                                            <option value="110">
-                                                110 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço
-                                            </option>
-                                            <option value="115">
-                                                115 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço - Telefone
-                                            </option>
-                                            <option value="150">
-                                                150 - Valor do pedido
-                                            </option>
-                                            <option value="200">
-                                                200 - Captura de imagem 1 da
-                                                atividade
-                                            </option>
-                                            <option value="210">
-                                                210 - Captura de imagem 2 da
-                                                atividade
-                                            </option>
-                                            <option value="220">
-                                                220 - Número da NF - Chave Danf
-                                                (Ex.: NF 990011 - DANF
-                                                23201124530999000149550010001372771277913780)
-                                            </option>
-                                            <option value="230">
-                                                230 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                CEP: XXXXXXXX, data hora
-                                                solicitação, observação
-                                            </option>
-                                            <option value="240">
-                                                240 - Nome do tomador do serviço
-                                                (código do orcamento), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="250">
-                                                250 - Nome do tomador do serviço
-                                                (código do orcamento), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="260">
-                                                260 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), hora da solicitação
-                                            </option>
-                                            <option value="261">
-                                                261 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), Hora da Pré-nota,
-                                                Hora do faturamento
-                                            </option>
-                                            <option value="500">
-                                                500 - TEMPLATE
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Display 2 - no APP"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                0 - NÃO EXIBIR INFORMAÇÃO
-                                            </option>
-                                            <option value="1">
-                                                1 - logradouro, numero, bairro
-                                            </option>
-                                            <option value="2">
-                                                2 - logradouro, numero, bairro,
-                                                cidade/municipio
-                                            </option>
-                                            <option value="3">
-                                                3 - logradouro, numero, bairro,
-                                                (hora)
-                                            </option>
-                                            <option value="4">
-                                                4 - logradouro, numero, bairro,
-                                                cidade/municipio, (hora)
-                                            </option>
-                                            <option value="5">
-                                                5 - logradouro, numero, bairro,
-                                                (data hora)
-                                            </option>
-                                            <option value="6">
-                                                6 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora)
-                                            </option>
-                                            <option value="7">
-                                                7 - logradouro, numero, bairro,
-                                                (data hora para realização da
-                                                atividade)
-                                            </option>
-                                            <option value="8">
-                                                8 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="9">
-                                                9 - logradouro, numero,
-                                                complemento, bairro, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="10">
-                                                10 - Nome do tomador do serviço
-                                            </option>
-                                            <option value="11">
-                                                11 - Nome do tomador do serviço,
-                                                data hora da solicitação
-                                            </option>
-                                            <option value="12">
-                                                12 - Nome do tomador do serviço,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="13">
-                                                13 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="14">
-                                                14 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="15">
-                                                15 - Observações
-                                            </option>
-                                            <option value="16">
-                                                16 - Tipo atividade (código da
-                                                atividade), observação
-                                            </option>
-                                            <option value="33">
-                                                33 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="34">
-                                                34 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="35">
-                                                35 - Nome do tomador do serviço
-                                                (código da atividade)
-                                            </option>
-                                            <option value="36">
-                                                36 - Nome do tomador do serviço
-                                                (código da atividade), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="37">
-                                                37 - Nome do tomador do serviço
-                                                (código da atividade), telefone,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="38">
-                                                38 - Tipo atividade, Nome do
-                                                tomador do serviço (código da
-                                                atividade), telefone, hora da
-                                                solicitação
-                                            </option>
-                                            <option value="40">
-                                                40 - logradouro, numero,
-                                                complemento, bairro, observação
-                                            </option>
-                                            <option value="41">
-                                                41 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação
-                                            </option>
-                                            <option value="42">
-                                                42 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação, Vols.: #
-                                            </option>
-                                            <option value="45">
-                                                45 - Nome do usuário do sistema
-                                                que cadastrou a atividade -
-                                                observação
-                                            </option>
-                                            <option value="46">
-                                                46 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço
-                                            </option>
-                                            <option value="47">
-                                                47 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço -
-                                                observação
-                                            </option>
-                                            <option value="48">
-                                                48 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço (código da
-                                                atividade) - observação
-                                            </option>
-                                            <option value="50">
-                                                50 - Nome do usuário do sistema
-                                                que cadastrou a atividade
-                                            </option>
-                                            <option value="60">
-                                                60 - Razão Social do cliente
-                                            </option>
-                                            <option value="70">
-                                                70 - Código da atividade, data
-                                                hora da solicitação, origem
-                                            </option>
-                                            <option value="80">
-                                                80 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - observação
-                                            </option>
-                                            <option value="81">
-                                                81 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço
-                                            </option>
-                                            <option value="82">
-                                                82 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - observação
-                                            </option>
-                                            <option value="83">
-                                                83 - Nome fantasia da
-                                                loja/endereço de origem - Razão
-                                                social cliente - Telefone
-                                            </option>
-                                            <option value="84">
-                                                84 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - Telefone
-                                            </option>
-                                            <option value="90">
-                                                90 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="91">
-                                                91 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Vendedor
-                                            </option>
-                                            <option value="92">
-                                                92 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Usuário que cadastrou a
-                                                atividade
-                                            </option>
-                                            <option value="100">
-                                                100 - Código do cliente - Razão
-                                                social do cliente
-                                            </option>
-                                            <option value="101">
-                                                101 - Código do cliente - Nome
-                                                fantasia do cliente
-                                            </option>
-                                            <option value="110">
-                                                110 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço
-                                            </option>
-                                            <option value="115">
-                                                115 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço - Telefone
-                                            </option>
-                                            <option value="150">
-                                                150 - Valor do pedido
-                                            </option>
-                                            <option value="200">
-                                                200 - Captura de imagem 1 da
-                                                atividade
-                                            </option>
-                                            <option value="210">
-                                                210 - Captura de imagem 2 da
-                                                atividade
-                                            </option>
-                                            <option value="220">
-                                                220 - Número da NF - Chave Danf
-                                                (Ex.: NF 990011 - DANF
-                                                23201124530999000149550010001372771277913780)
-                                            </option>
-                                            <option value="230">
-                                                230 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                CEP: XXXXXXXX, data hora
-                                                solicitação, observação
-                                            </option>
-                                            <option value="240">
-                                                240 - Nome do tomador do serviço
-                                                (código do orcamento), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="250">
-                                                250 - Nome do tomador do serviço
-                                                (código do orcamento), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="260">
-                                                260 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), hora da solicitação
-                                            </option>
-                                            <option value="261">
-                                                261 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), Hora da Pré-nota,
-                                                Hora do faturamento
-                                            </option>
-                                            <option value="500">
-                                                500 - TEMPLATE
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Display 1 - na WEB"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                0 - NÃO EXIBIR INFORMAÇÃO
-                                            </option>
-                                            <option value="1">
-                                                1 - logradouro, numero, bairro
-                                            </option>
-                                            <option value="2">
-                                                2 - logradouro, numero, bairro,
-                                                cidade/municipio
-                                            </option>
-                                            <option value="3">
-                                                3 - logradouro, numero, bairro,
-                                                (hora)
-                                            </option>
-                                            <option value="4">
-                                                4 - logradouro, numero, bairro,
-                                                cidade/municipio, (hora)
-                                            </option>
-                                            <option value="5">
-                                                5 - logradouro, numero, bairro,
-                                                (data hora)
-                                            </option>
-                                            <option value="6">
-                                                6 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora)
-                                            </option>
-                                            <option value="7">
-                                                7 - logradouro, numero, bairro,
-                                                (data hora para realização da
-                                                atividade)
-                                            </option>
-                                            <option value="8">
-                                                8 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="9">
-                                                9 - logradouro, numero,
-                                                complemento, bairro, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="10">
-                                                10 - Nome do tomador do serviço
-                                            </option>
-                                            <option value="11">
-                                                11 - Nome do tomador do serviço,
-                                                data hora da solicitação
-                                            </option>
-                                            <option value="12">
-                                                12 - Nome do tomador do serviço,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="13">
-                                                13 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="14">
-                                                14 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="15">
-                                                15 - Observações
-                                            </option>
-                                            <option value="16">
-                                                16 - Tipo atividade (código da
-                                                atividade), observação
-                                            </option>
-                                            <option value="33">
-                                                33 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="34">
-                                                34 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="35">
-                                                35 - Nome do tomador do serviço
-                                                (código da atividade)
-                                            </option>
-                                            <option value="36">
-                                                36 - Nome do tomador do serviço
-                                                (código da atividade), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="37">
-                                                37 - Nome do tomador do serviço
-                                                (código da atividade), telefone,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="38">
-                                                38 - Tipo atividade, Nome do
-                                                tomador do serviço (código da
-                                                atividade), telefone, hora da
-                                                solicitação
-                                            </option>
-                                            <option value="40">
-                                                40 - logradouro, numero,
-                                                complemento, bairro, observação
-                                            </option>
-                                            <option value="41">
-                                                41 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação
-                                            </option>
-                                            <option value="42">
-                                                42 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação, Vols.: #
-                                            </option>
-                                            <option value="45">
-                                                45 - Nome do usuário do sistema
-                                                que cadastrou a atividade -
-                                                observação
-                                            </option>
-                                            <option value="46">
-                                                46 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço
-                                            </option>
-                                            <option value="47">
-                                                47 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço -
-                                                observação
-                                            </option>
-                                            <option value="48">
-                                                48 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço (código da
-                                                atividade) - observação
-                                            </option>
-                                            <option value="50">
-                                                50 - Nome do usuário do sistema
-                                                que cadastrou a atividade
-                                            </option>
-                                            <option value="60">
-                                                60 - Razão Social do cliente
-                                            </option>
-                                            <option value="70">
-                                                70 - Código da atividade, data
-                                                hora da solicitação, origem
-                                            </option>
-                                            <option value="80">
-                                                80 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - observação
-                                            </option>
-                                            <option value="81">
-                                                81 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço
-                                            </option>
-                                            <option value="82">
-                                                82 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - observação
-                                            </option>
-                                            <option value="83">
-                                                83 - Nome fantasia da
-                                                loja/endereço de origem - Razão
-                                                social cliente - Telefone
-                                            </option>
-                                            <option value="84">
-                                                84 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - Telefone
-                                            </option>
-                                            <option value="90">
-                                                90 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="91">
-                                                91 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Vendedor
-                                            </option>
-                                            <option value="92">
-                                                92 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Usuário que cadastrou a
-                                                atividade
-                                            </option>
-                                            <option value="100">
-                                                100 - Código do cliente - Razão
-                                                social do cliente
-                                            </option>
-                                            <option value="101">
-                                                101 - Código do cliente - Nome
-                                                fantasia do cliente
-                                            </option>
-                                            <option value="110">
-                                                110 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço
-                                            </option>
-                                            <option value="115">
-                                                115 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço - Telefone
-                                            </option>
-                                            <option value="150">
-                                                150 - Valor do pedido
-                                            </option>
-                                            <option value="200">
-                                                200 - Captura de imagem 1 da
-                                                atividade
-                                            </option>
-                                            <option value="210">
-                                                210 - Captura de imagem 2 da
-                                                atividade
-                                            </option>
-                                            <option value="220">
-                                                220 - Número da NF - Chave Danf
-                                                (Ex.: NF 990011 - DANF
-                                                23201124530999000149550010001372771277913780)
-                                            </option>
-                                            <option value="230">
-                                                230 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                CEP: XXXXXXXX, data hora
-                                                solicitação, observação
-                                            </option>
-                                            <option value="240">
-                                                240 - Nome do tomador do serviço
-                                                (código do orcamento), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="250">
-                                                250 - Nome do tomador do serviço
-                                                (código do orcamento), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="260">
-                                                260 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), hora da solicitação
-                                            </option>
-                                            <option value="261">
-                                                261 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), Hora da Pré-nota,
-                                                Hora do faturamento
-                                            </option>
-                                            <option value="500">
-                                                500 - TEMPLATE
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Display 2 - na WEB"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                0 - NÃO EXIBIR INFORMAÇÃO
-                                            </option>
-                                            <option value="1">
-                                                1 - logradouro, numero, bairro
-                                            </option>
-                                            <option value="2">
-                                                2 - logradouro, numero, bairro,
-                                                cidade/municipio
-                                            </option>
-                                            <option value="3">
-                                                3 - logradouro, numero, bairro,
-                                                (hora)
-                                            </option>
-                                            <option value="4">
-                                                4 - logradouro, numero, bairro,
-                                                cidade/municipio, (hora)
-                                            </option>
-                                            <option value="5">
-                                                5 - logradouro, numero, bairro,
-                                                (data hora)
-                                            </option>
-                                            <option value="6">
-                                                6 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora)
-                                            </option>
-                                            <option value="7">
-                                                7 - logradouro, numero, bairro,
-                                                (data hora para realização da
-                                                atividade)
-                                            </option>
-                                            <option value="8">
-                                                8 - logradouro, numero, bairro,
-                                                cidade/municipio, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="9">
-                                                9 - logradouro, numero,
-                                                complemento, bairro, (data hora
-                                                para realização da atividade)
-                                            </option>
-                                            <option value="10">
-                                                10 - Nome do tomador do serviço
-                                            </option>
-                                            <option value="11">
-                                                11 - Nome do tomador do serviço,
-                                                data hora da solicitação
-                                            </option>
-                                            <option value="12">
-                                                12 - Nome do tomador do serviço,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="13">
-                                                13 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="14">
-                                                14 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações
-                                            </option>
-                                            <option value="15">
-                                                15 - Observações
-                                            </option>
-                                            <option value="16">
-                                                16 - Tipo atividade (código da
-                                                atividade), observação
-                                            </option>
-                                            <option value="33">
-                                                33 - Nome do tomador do serviço,
-                                                data hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="34">
-                                                34 - Nome do tomador do serviço,
-                                                hora da solicitação e
-                                                observações (quebra de linha
-                                                antes da obs)
-                                            </option>
-                                            <option value="35">
-                                                35 - Nome do tomador do serviço
-                                                (código da atividade)
-                                            </option>
-                                            <option value="36">
-                                                36 - Nome do tomador do serviço
-                                                (código da atividade), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="37">
-                                                37 - Nome do tomador do serviço
-                                                (código da atividade), telefone,
-                                                hora da solicitação
-                                            </option>
-                                            <option value="38">
-                                                38 - Tipo atividade, Nome do
-                                                tomador do serviço (código da
-                                                atividade), telefone, hora da
-                                                solicitação
-                                            </option>
-                                            <option value="40">
-                                                40 - logradouro, numero,
-                                                complemento, bairro, observação
-                                            </option>
-                                            <option value="41">
-                                                41 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação
-                                            </option>
-                                            <option value="42">
-                                                42 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                data hora solicitação,
-                                                observação, Vols.: #
-                                            </option>
-                                            <option value="45">
-                                                45 - Nome do usuário do sistema
-                                                que cadastrou a atividade -
-                                                observação
-                                            </option>
-                                            <option value="46">
-                                                46 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço
-                                            </option>
-                                            <option value="47">
-                                                47 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço -
-                                                observação
-                                            </option>
-                                            <option value="48">
-                                                48 - Nome do usuário do sistema
-                                                que cadastrou a atividade - Nome
-                                                do tomador do serviço (código da
-                                                atividade) - observação
-                                            </option>
-                                            <option value="50">
-                                                50 - Nome do usuário do sistema
-                                                que cadastrou a atividade
-                                            </option>
-                                            <option value="60">
-                                                60 - Razão Social do cliente
-                                            </option>
-                                            <option value="70">
-                                                70 - Código da atividade, data
-                                                hora da solicitação, origem
-                                            </option>
-                                            <option value="80">
-                                                80 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - observação
-                                            </option>
-                                            <option value="81">
-                                                81 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço
-                                            </option>
-                                            <option value="82">
-                                                82 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - observação
-                                            </option>
-                                            <option value="83">
-                                                83 - Nome fantasia da
-                                                loja/endereço de origem - Razão
-                                                social cliente - Telefone
-                                            </option>
-                                            <option value="84">
-                                                84 - Nome fantasia da
-                                                loja/endereço de origem (código
-                                                da atividade) - Nome do tomador
-                                                do serviço - Telefone
-                                            </option>
-                                            <option value="90">
-                                                90 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="91">
-                                                91 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Vendedor
-                                            </option>
-                                            <option value="92">
-                                                92 - Nome do tomador do serviço
-                                                (código da atividade), Hora da
-                                                Pré-nota, Hora do faturamento,
-                                                Usuário que cadastrou a
-                                                atividade
-                                            </option>
-                                            <option value="100">
-                                                100 - Código do cliente - Razão
-                                                social do cliente
-                                            </option>
-                                            <option value="101">
-                                                101 - Código do cliente - Nome
-                                                fantasia do cliente
-                                            </option>
-                                            <option value="110">
-                                                110 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço
-                                            </option>
-                                            <option value="115">
-                                                115 - Tipo de atividade - Nome
-                                                fantasia do solicitante do
-                                                serviço - Telefone
-                                            </option>
-                                            <option value="150">
-                                                150 - Valor do pedido
-                                            </option>
-                                            <option value="200">
-                                                200 - Captura de imagem 1 da
-                                                atividade
-                                            </option>
-                                            <option value="210">
-                                                210 - Captura de imagem 2 da
-                                                atividade
-                                            </option>
-                                            <option value="220">
-                                                220 - Número da NF - Chave Danf
-                                                (Ex.: NF 990011 - DANF
-                                                23201124530999000149550010001372771277913780)
-                                            </option>
-                                            <option value="230">
-                                                230 - logradouro, numero,
-                                                complemento, bairro, cidade,
-                                                CEP: XXXXXXXX, data hora
-                                                solicitação, observação
-                                            </option>
-                                            <option value="240">
-                                                240 - Nome do tomador do serviço
-                                                (código do orcamento), hora da
-                                                solicitação
-                                            </option>
-                                            <option value="250">
-                                                250 - Nome do tomador do serviço
-                                                (código do orcamento), Hora da
-                                                Pré-nota, Hora do faturamento
-                                            </option>
-                                            <option value="260">
-                                                260 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), hora da solicitação
-                                            </option>
-                                            <option value="261">
-                                                261 - Canal de venda, Nome do
-                                                tomador do serviço (código da
-                                                atividade), Hora da Pré-nota,
-                                                Hora do faturamento
-                                            </option>
-                                            <option value="500">
-                                                500 - TEMPLATE
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-                                </CRow>
-                            </CAccordionBody>
-                        </CAccordionItem>
-                        <CAccordionItem itemKey={4}>
                             <CAccordionHeader>EFEITOS NO APP</CAccordionHeader>
                             <CAccordionBody>
                                 <CRow>
@@ -1429,24 +410,24 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                 </CRow>
                             </CAccordionBody>
                         </CAccordionItem>
-                        <CAccordionItem itemKey={5}>
+
+                        <CAccordionItem itemKey={4}>
                             <CAccordionHeader>
-                                COMPORTAMENTO NO SISTEMA
+                                EFEITOS NO SISTEMA
                             </CAccordionHeader>
                             <CAccordionBody>
                                 <CRow>
                                     <CCol className="mb-3" md={12}>
-                                        <label for="duracao_estimada_tipoativ">
+                                        <label htmlFor="duracao_estimada_tipoativ">
                                             Duração estimada para realização da
                                             atividade (em minutos)
                                         </label>
                                         <input
                                             type="text"
                                             subtype="int"
-                                            class="form-control"
+                                            className="form-control"
                                             id="duracao_estimada_tipoativ"
                                             placeholder=""
-                                            required="true"
                                         ></input>
                                     </CCol>
 
@@ -1623,9 +604,9 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                             </CAccordionBody>
                         </CAccordionItem>
 
-                        <CAccordionItem itemKey={7}>
+                        <CAccordionItem itemKey={5}>
                             <CAccordionHeader>
-                                PAINEL DE OPERAÇÃO WEB - NÚMEROS
+                                BLOQUEIOS/DESBLOQUEIOS ENTRE AS OPÇÕES
                             </CAccordionHeader>
                             <CAccordionBody>
                                 <CRow>
@@ -1728,7 +709,326 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                 </CRow>
                             </CAccordionBody>
                         </CAccordionItem>
+
+                        <CAccordionItem itemKey={6}>
+                            <CAccordionHeader>
+                                ENVIO DE SMS
+                            </CAccordionHeader>
+                            <CAccordionBody>
+                                <CRow>
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Notificações Android"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Ícone e total
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição do peso/volume das atividades disponíveis/no balcão, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Exibir o peso total da área e o
+                                                peso total em cada atividade
+                                                (unidade em kg, 2 casas
+                                                decimais)
+                                            </option>
+                                            <option value="2">
+                                                Exibir o número de volumes total
+                                                da área e o número de volumes de
+                                                cada atividade
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição da contagem de atividades no roteiro, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Ícone e total
+                                            </option>
+                                            <option value="2">
+                                                Ícone e finalizadas/total
+                                            </option>
+                                            <option value="3">
+                                                Ícone e não finalizadas/total
+                                            </option>
+                                            <option value="12">
+                                                Ícone e finalizadas/total (Com
+                                                indicação de conclusão de
+                                                roteiro)
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição do peso/volume das atividades no roteiro, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Exibir o peso total (unidade kg,
+                                                com 2 casas decimais)
+                                            </option>
+                                            <option value="2">
+                                                Exibir o peso finalizado/peso
+                                                total (unidade kg, com 2 casas
+                                                decimais)
+                                            </option>
+                                            <option value="3">
+                                                Exibir o peso não
+                                                finalizado/peso total (unidade
+                                                kg, com 2 casas decimais)
+                                            </option>
+                                            <option value="4">
+                                                Exibir o número total de volumes
+                                            </option>
+                                            <option value="5">
+                                                Exibir o número total de volumes
+                                                concluídos/total
+                                            </option>
+                                            <option value="6">
+                                                Exibir o número total de volumes
+                                                não concluídos/total
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+                                </CRow>
+                            </CAccordionBody>
+                        </CAccordionItem>
+
+                        <CAccordionItem itemKey={7}>
+                            <CAccordionHeader>
+                                CRIAÇÃO DE UMA NOVA ATIVIDADE
+                            </CAccordionHeader>
+                            <CAccordionBody>
+                                <CRow>
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Notificações Android"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Ícone e total
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição do peso/volume das atividades disponíveis/no balcão, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Exibir o peso total da área e o
+                                                peso total em cada atividade
+                                                (unidade em kg, 2 casas
+                                                decimais)
+                                            </option>
+                                            <option value="2">
+                                                Exibir o número de volumes total
+                                                da área e o número de volumes de
+                                                cada atividade
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição da contagem de atividades no roteiro, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Ícone e total
+                                            </option>
+                                            <option value="2">
+                                                Ícone e finalizadas/total
+                                            </option>
+                                            <option value="3">
+                                                Ícone e não finalizadas/total
+                                            </option>
+                                            <option value="12">
+                                                Ícone e finalizadas/total (Com
+                                                indicação de conclusão de
+                                                roteiro)
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição do peso/volume das atividades no roteiro, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Exibir o peso total (unidade kg,
+                                                com 2 casas decimais)
+                                            </option>
+                                            <option value="2">
+                                                Exibir o peso finalizado/peso
+                                                total (unidade kg, com 2 casas
+                                                decimais)
+                                            </option>
+                                            <option value="3">
+                                                Exibir o peso não
+                                                finalizado/peso total (unidade
+                                                kg, com 2 casas decimais)
+                                            </option>
+                                            <option value="4">
+                                                Exibir o número total de volumes
+                                            </option>
+                                            <option value="5">
+                                                Exibir o número total de volumes
+                                                concluídos/total
+                                            </option>
+                                            <option value="6">
+                                                Exibir o número total de volumes
+                                                não concluídos/total
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+                                </CRow>
+                            </CAccordionBody>
+                        </CAccordionItem>
+
                         <CAccordionItem itemKey={8}>
+                            <CAccordionHeader>
+                            TRATAMENTO NOS RELATÓRIOS
+                            </CAccordionHeader>
+                            <CAccordionBody>
+                                <CRow>
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Notificações Android"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Ícone e total
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição do peso/volume das atividades disponíveis/no balcão, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Exibir o peso total da área e o
+                                                peso total em cada atividade
+                                                (unidade em kg, 2 casas
+                                                decimais)
+                                            </option>
+                                            <option value="2">
+                                                Exibir o número de volumes total
+                                                da área e o número de volumes de
+                                                cada atividade
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição da contagem de atividades no roteiro, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Ícone e total
+                                            </option>
+                                            <option value="2">
+                                                Ícone e finalizadas/total
+                                            </option>
+                                            <option value="3">
+                                                Ícone e não finalizadas/total
+                                            </option>
+                                            <option value="12">
+                                                Ícone e finalizadas/total (Com
+                                                indicação de conclusão de
+                                                roteiro)
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+
+                                    <CCol className="mb-3" md={12}>
+                                        <CFormSelect
+                                            label="Exibição do peso/volume das atividades no roteiro, no painel de operação"
+                                            aria-label="Default select example"
+                                        >
+                                            <option value="0">
+                                                Não exibir
+                                            </option>
+                                            <option value="1">
+                                                Exibir o peso total (unidade kg,
+                                                com 2 casas decimais)
+                                            </option>
+                                            <option value="2">
+                                                Exibir o peso finalizado/peso
+                                                total (unidade kg, com 2 casas
+                                                decimais)
+                                            </option>
+                                            <option value="3">
+                                                Exibir o peso não
+                                                finalizado/peso total (unidade
+                                                kg, com 2 casas decimais)
+                                            </option>
+                                            <option value="4">
+                                                Exibir o número total de volumes
+                                            </option>
+                                            <option value="5">
+                                                Exibir o número total de volumes
+                                                concluídos/total
+                                            </option>
+                                            <option value="6">
+                                                Exibir o número total de volumes
+                                                não concluídos/total
+                                            </option>
+                                        </CFormSelect>
+                                    </CCol>
+                                </CRow>
+                            </CAccordionBody>
+                        </CAccordionItem>
+
+                        <CAccordionItem itemKey={9}>
                             <CAccordionHeader>
                                 OUTRAS CONFIGURAÇÕES
                             </CAccordionHeader>
@@ -1795,16 +1095,15 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                     </CCol>
 
                                     <CCol className="mb-3" md={12}>
-                                        <label for="duracao_estimada_tipoativ">
+                                        <label htmlFor="duracao_estimada_tipoativ">
                                             Id para integração
                                         </label>
                                         <input
                                             type="text"
                                             subtype="int"
-                                            class="form-control"
+                                            className="form-control"
                                             id="duracao_estimada_tipoativ"
                                             placeholder=""
-                                            required="true"
                                         ></input>
                                     </CCol>
 
@@ -1826,281 +1125,6 @@ const CreateOption = ({ createOptionModalVisible, setCreateOptionModalVisible })
                                                 jasaiu.com, exibir a previsão de
                                                 chegada apenas após a marcação
                                                 de opção com lógica "a caminho"{" "}
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-                                </CRow>
-                            </CAccordionBody>
-                        </CAccordionItem>
-                        <CAccordionItem itemKey={9}>
-                            <CAccordionHeader>
-                                SOLICITAÇÕES PORTAL
-                            </CAccordionHeader>
-                            <CAccordionBody>
-                                <CRow>
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo cidade"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Obrigatório e iniciado vazio
-                                            </option>
-                                            <option value="1">
-                                                Obrigatório e inicializado com a
-                                                cidade do perfil
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo localização do endereço no mapa"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="2">
-                                                Obrigatório inicia indefinido, e
-                                                precisa de confirmação no mapa
-                                            </option>
-                                            <option value="3">
-                                                Obrigatório, automaticamente
-                                                preenchido ao deixar o foco de
-                                                qualquer um dos campos de
-                                                endereco
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo nome do contato"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo nome do contato"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo tel/e-mail"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                            <option value="3">
-                                                Obrigatório com código do país
-                                            </option>
-                                            <option value="4">
-                                                Opcional com código do país
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo número do pedido / código da atividade"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo volume"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo peso"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo forma de pagamento"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo arquivo anexo"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Campo valor do pedido"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Formulário extra"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Sem formulário extra
-                                            </option>
-                                            <option value="1">BDO</option>
-                                            <option value="2">
-                                                AWB/HAWB - Conhecimento de
-                                                Embarque Aéreo
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Companhia Aérea"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Endereço pré definido"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="10">
-                                                Aeroportos com tag AEROPORTO
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Flight number, ETA, ETD"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Dimensões para cubagem (Altura x Largura x Comprimento)"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                        </CFormSelect>
-                                    </CCol>
-
-                                    <CCol className="mb-3" md={12}>
-                                        <CFormSelect
-                                            label="Telefone extra"
-                                            aria-label="Default select example"
-                                        >
-                                            <option value="0">
-                                                Desativado
-                                            </option>
-                                            <option value="1">Opcional</option>
-                                            <option value="2">
-                                                Obrigatório
-                                            </option>
-                                            <option value="3">
-                                                Obrigatório com código do país
-                                            </option>
-                                            <option value="4">
-                                                Opcional com código do país
                                             </option>
                                         </CFormSelect>
                                     </CCol>
