@@ -31,6 +31,8 @@ import ActivityCardItem from '@/Components/ActivityCardItem';
 import DashboardMap from '@/Components/maps/DashboardMap';
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
 import { useSelector } from 'react-redux';
+import EntregadoresCardItem from '@/Components/EntregadoresCardItem';
+
 
 export default function Dashboard(props) {
     const { activities } = props;
@@ -55,15 +57,18 @@ export default function Dashboard(props) {
                     <CCol>
                         <div className="d-grid gap-2 d-md-flex justify-content-center mb-3">
                             <CButtonGroup className="" role="group" aria-label="Button group with nested dropdown">
-                                <CButton
+                                <Link
                                     type="button"
                                     color="primary"
-                                    onClick={() => setVisible(!visible)}
+                                    className="btn btn-primary"
+                                    as="button"
+                                    href={route('activities.index')}
                                 >
                                     <CIcon
                                         icon={cilPlus}
                                     />
-                                </CButton>
+
+                                </Link>
                                 <CButton
                                     type="button"
                                     color="primary"
@@ -153,15 +158,15 @@ export default function Dashboard(props) {
                                         icon={cilCalendarCheck}
                                     />
                                     <strong>
-                                    ATIVIDADES SEM ENDEREÇO
+                                        ATIVIDADES SEM ENDEREÇO
                                     </strong>
                                 </CCardHeader>
-                                <CCardBody>
-                                    <div className="overflow-auto" style={{ maxHeight: '340px' }}>
-                                        { activities && activities.map( activitity => (
+                                <CCardBody className="p-2">
+                                    { activities && activities.map( activitity => (
+                                        <div  className="mb-2">
                                             <ActivityCardItem key={activitity.id} activity={activitity} />
-                                        ))}
-                                    </div>
+                                        </div>
+                                    ))}
                                 </CCardBody>
                             </CCard>
                         ) : (
@@ -169,94 +174,7 @@ export default function Dashboard(props) {
                                 Cadastre sua primeira atividade <Link className="alert-link" href="/activities">clique aqui</Link>
                             </CAlert>
                         ) }
-    {/*
-                        <CCard className="mb-2">
-                            <CCardHeader>
-                                <CIcon
-                                    className="mr-2"
-                                    icon={cilCalendarCheck}
-                                />
-                                <strong>
-                                    METROPOLITANA 1
-                                </strong>
-                            </CCardHeader>
-                            <CCardBody>
-                                <CCard>
-                                    <CCardHeader>
-                                        <CBadge color="primary">2</CBadge> Lorem ipsum dolor
-                                    </CCardHeader>
-                                    <CCardBody>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                    </CCardBody>
-                                </CCard>
-                            </CCardBody>
-                        </CCard>
 
-                        <CCard className="mb-2">
-                            <CCardHeader>
-                                <CIcon
-                                    className="mr-2"
-                                    icon={cilCalendarCheck}
-                                />
-                                <strong>
-                                MUCURIPE
-                                </strong>
-                            </CCardHeader>
-                            <CCardBody>
-                                <CCard>
-                                    <CCardHeader>
-                                        <CBadge color="primary">3</CBadge> Lorem ipsum dolor
-                                    </CCardHeader>
-                                    <CCardBody>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                    </CCardBody>
-                                </CCard>
-                            </CCardBody>
-                        </CCard>
-
-                        <CCard className="mb-2">
-                            <CCardHeader>
-                                <CIcon
-                                    className="mr-2"
-                                    icon={cilCalendarCheck}
-                                />
-                                <strong>
-                                    CENTRO
-                                </strong>
-                            </CCardHeader>
-                            <CCardBody>
-                                <CCard>
-                                    <CCardHeader>
-                                        <CBadge color="primary">4</CBadge> Lorem ipsum dolor
-                                    </CCardHeader>
-                                    <CCardBody>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                    </CCardBody>
-                                </CCard>
-                            </CCardBody>
-                        </CCard>
-
-                        <CCard className="mb-2">
-                            <CCardHeader>
-                                <CIcon
-                                    className="mr-2"
-                                    icon={cilCalendarCheck}
-                                />
-                                <strong>
-                                    CAUCAIA
-                                </strong>
-                            </CCardHeader>
-                            <CCardBody>
-                                <CCard>
-                                    <CCardHeader>
-                                        <CBadge color="primary">5</CBadge> Lorem ipsum dolor
-                                    </CCardHeader>
-                                    <CCardBody>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                    </CCardBody>
-                                </CCard>
-                            </CCardBody>
-                        </CCard> */}
                     </CCol>
                 ) }
 
@@ -268,8 +186,7 @@ export default function Dashboard(props) {
 
                 { showDashboardRight && (
                     <CCol>
-                        Roteiros aqui!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur rerum delectus, sed pariatur voluptatum quia doloremque corrupti exercitationem, officiis officia impedit quae labore cupiditate sit? Hic voluptatem facere tempore quod.
+                      <EntregadoresCardItem />
                     </CCol>
                 ) }
 

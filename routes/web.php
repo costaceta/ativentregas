@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UsuarioMovel;
+use App\Http\Controllers\UsuarioMovelController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -63,7 +64,7 @@ Route::resource('/suppliers', SupplierController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('/usuarios-moveis', UsuarioMovel::class)
+Route::resource('/usuarios-moveis', UsuarioMovelController::class)
     ->only(['index', 'create', 'store'])
     ->middleware(['auth', 'verified']);
 

@@ -43,7 +43,6 @@ export default function Index(props) {
                 errors={props.errors}
             >
                 <Head title="Cadastro de Atividades" />
-                { console.log(props.errors) }
                 <CRow>
                     <h3>Cadastro de Atividades</h3>
                     {
@@ -139,27 +138,6 @@ export default function Index(props) {
                     </CCol>
 
                     <CCol sm={12} lg={4}>
-                        { activities && activities.map( activity => (
-                            <CCard key={activity.id} className="mb-3">
-                                <CCardBody>
-                                    <p>
-                                       ID: #{activity.id}
-                                    </p>
-                                    <p>
-                                        {activity.activity_type}
-                                    </p>
-                                    <p>
-                                        {activity.order_date}
-                                    </p>
-                                    <p>
-                                        {activity.order_time}
-                                    </p>
-                                    <p>
-                                        {activity.code}
-                                    </p>
-                                </CCardBody>
-                            </CCard>
-                        ) )  }
                     </CCol>
                 </CRow>
             </AuthenticatedBase>

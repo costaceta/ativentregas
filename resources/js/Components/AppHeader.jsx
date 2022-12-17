@@ -1,30 +1,21 @@
-import React from 'react'
 // OLD: import { NavLink } from 'react-router-dom'
 
-import { Link as NavLink} from '@inertiajs/inertia-react';
-
-import { useSelector, useDispatch } from 'react-redux'
+import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
 import {
   CContainer,
   CHeader,
   CHeaderBrand,
   CHeaderDivider,
   CHeaderNav,
-  CHeaderToggler,
-  CNavLink,
-  CNavItem,
-  CButtonGroup,
-  CButton,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+  CHeaderToggler, CNavItem, CNavLink
+} from '@coreui/react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { AppBreadcrumb } from './index'
-import { AppHeaderDropdown } from './header/index'
-import { logo } from '../../assets/brand/logo'
+import { useEffect, useState } from 'react';
+import { logo } from '../../assets/brand/logo';
+import { AppHeaderDropdown } from './header/index';
 import LayoutToggleButtons from './HeaderToggleButtons';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -47,7 +38,8 @@ const AppHeader = () => {
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <CIcon icon={logo} height={48} alt="Logo" />
+          {/* TODO: add logo para o mobile removido temporariamente */}
+          {/* <CIcon icon={logo} height={48} alt="Logo" /> */}
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
