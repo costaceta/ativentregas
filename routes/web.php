@@ -33,7 +33,7 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('welcome');
 
 /*** OPERAÇÃO ***/
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::resource('/activities', ActivitiesController::class)
     ->only(['index', 'store'])

@@ -68,7 +68,7 @@ const EntregadoresCardItem = () => {
                     </CListGroupItem>
                     <CCollapse visible={visible}>
                         <CListGroupItem>
-                            <strong>Login:</strong> allanformiga <br />
+                            <strong>Login:</strong> { item.name.trim().toLocaleLowerCase().split(" ").join("").normalize('NFD').replace(/[\u0300-\u036f]/g, "") } <br />
                             <strong>Tel:</strong> (83) 99652-5975
                         </CListGroupItem>
                     </CCollapse>

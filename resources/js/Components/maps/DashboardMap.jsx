@@ -217,7 +217,7 @@ function DashboardMap() {
 
 
     return (
-        <div className="map-wrapper">
+        <div className="map-wrapper mb-3">
             <div
                 ref={ el => mapContainer.current = el }
                 style={{ minHeight: 700 }}
