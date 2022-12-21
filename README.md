@@ -32,6 +32,10 @@ Os commits irão seguir o padrão Convencional commits
 - **[Convencional commits](https://www.conventionalcommits.org/pt-br/v1.0.0-beta.4/)**
 - **[Convencional commits exemplos](https://github.com/iuricode/padroes-de-commits)**
 
+## Configuração do deploy
+
+**[Link da configuração](https://medium.com/@luisdalmolin/como-fazer-deploy-de-uma-aplica%C3%A7%C3%A3o-laravel-em-uma-hospedagem-compartilhada-bc114ee2cbb9)**
+
 ## Dependências
 
 - **[React DatePicker](https://reactdatepicker.com/)**
