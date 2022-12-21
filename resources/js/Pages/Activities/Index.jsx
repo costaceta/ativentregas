@@ -42,9 +42,9 @@ export default function Index(props) {
                 auth={props.auth}
                 errors={props.errors}
             >
-                <Head title="Cadastro de Atividades" />
+                <Head title="Inserir atividade" />
                 <CRow>
-                    <h3>Cadastro de Atividades</h3>
+                    <h3>Inserir atividade</h3>
                     {
                         props.flash.message && (
                             <>
@@ -84,11 +84,6 @@ export default function Index(props) {
                                                 { activity_types && activity_types.map( type => (
                                                     <option key={type.id} value={type.id}>{ type.title }</option>
                                                 )) }
-                                                {/* <option value="2">01 - ANALISE DE PDV</option>
-                                                <option value="3">02 - MR EMBALAGENS</option>
-                                                <option value="4">ATENDIMENTO DE LOCACAO</option>
-                                                <option value="5">ATIVIDADE DE ENTREGA</option>
-                                                <option value="6">ATIVIDADE PADRÃO</option> */}
                                             </CFormSelect>
                                         </CCol>
 
@@ -130,7 +125,7 @@ export default function Index(props) {
 
                                     </CRow>
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <PrimaryButton className="mt-4" processing={processing}>Criar atividade</PrimaryButton>
+                                        <PrimaryButton className="mt-4" processing={processing}>Inserir</PrimaryButton>
                                     </div>
                                 </CForm>
                             </CCardBody>

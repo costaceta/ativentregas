@@ -24,7 +24,8 @@ import {
     CModalFooter,
     CModalHeader,
     CModalTitle,
-    CRow
+    CRow,
+    CTooltip
 } from '@coreui/react';
 
 import ActivityCardItem from '@/Components/ActivityCardItem';
@@ -57,60 +58,31 @@ export default function Dashboard(props) {
                     <CCol>
                         <div className="d-grid gap-2 d-md-flex justify-content-center mb-3">
                             <CButtonGroup className="" role="group" aria-label="Button group with nested dropdown">
-                                <Link
-                                    type="button"
-                                    color="primary"
-                                    className="btn btn-primary"
-                                    as="button"
-                                    href={route('activities.index')}
-                                >
-                                    <CIcon
-                                        icon={cilPlus}
-                                    />
+                                <CTooltip content="Inserir uma atividade">
+                                    <Link
+                                        type="button"
+                                        color="primary"
+                                        className="btn btn-primary"
+                                        as="button"
+                                        href={route('activities.index')}
+                                    >
+                                        <CIcon
+                                            icon={cilPlus}
+                                        />
 
-                                </Link>
-                                <CButton
-                                    type="button"
-                                    color="primary"
-                                    onClick={ () => setSearchVisible(!searchVisible) }
-                                >
-                                    <CIcon
-                                        icon={cilSearch}
-                                    />
-                                </CButton>
-                                <CDropdown variant="btn-group">
-                                    <CDropdownToggle type="button" color="primary">
-                                        Atividades (0)
-                                    </CDropdownToggle>
-                                    <CDropdownMenu>
-                                        <CDropdownItem href="#">
-                                            Cadastrar
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Busca avançada
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Cancelar
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Adiar
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Pendências
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Programadas
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Informar registro do caixa
-                                        </CDropdownItem>
-                                        <CDropdownItem href="#">
-                                            Trazer atividade via integração
-                                        </CDropdownItem>
-                                        {/* <CDropdownDivider /> */}
-                                        {/* <CDropdownItem href="#">Separated link</CDropdownItem> */}
-                                    </CDropdownMenu>
-                                </CDropdown>
+                                    </Link>
+                                </CTooltip>
+                                <CTooltip content="Buscar atividade">
+                                    <CButton
+                                        type="button"
+                                        color="primary"
+                                        onClick={ () => setSearchVisible(!searchVisible) }
+                                    >
+                                        <CIcon
+                                            icon={cilSearch}
+                                        />
+                                    </CButton>
+                                </CTooltip>
                             </CButtonGroup>
 
                             <CModal size="xl" visible={visible} onClose={() => setVisible(false)}>

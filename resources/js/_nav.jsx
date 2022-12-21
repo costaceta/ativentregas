@@ -29,13 +29,13 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Dashboard',
+    name: 'Painel de Operação',
     href: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Cadastro de Atividades',
+    name: 'Inserir Atividade',
     href: '/activities',
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
   },
