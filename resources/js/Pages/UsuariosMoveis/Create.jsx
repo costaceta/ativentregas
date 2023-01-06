@@ -13,7 +13,6 @@ const Create = () => {
 
     const createUsuarioMovel = (event) => {
         event.preventDefault();
-        console.log("DATA", data)
 
         post(route('usuarios-moveis.store'), { onSuccess: () => reset() });
     };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Head, Link } from '@inertiajs/inertia-react';
 
@@ -12,28 +12,15 @@ import {
     CCardBody,
     CCardHeader,
     CCol,
-    CCollapse,
-    CDropdown,
-    CDropdownItem,
-    CDropdownMenu,
-    CDropdownToggle,
-    CFormInput,
-    CInputGroup,
-    CModal,
-    CModalBody,
-    CModalFooter,
-    CModalHeader,
-    CModalTitle,
-    CRow,
-    CTooltip
+    CCollapse, CFormInput,
+    CInputGroup, CRow, CTooltip
 } from '@coreui/react';
 
 import ActivityCardItem from '@/Components/ActivityCardItem';
+import DashboardRightSidebar from '@/Components/EntregadoresCardItem';
 import DashboardMap from '@/Components/maps/DashboardMap';
 import AuthenticatedBase from '@/Layouts/AuthenticatedBaseLayout';
 import { useSelector } from 'react-redux';
-import EntregadoresCardItem from '@/Components/EntregadoresCardItem';
-
 
 export default function Dashboard(props) {
     const { activities } = props;
@@ -42,13 +29,18 @@ export default function Dashboard(props) {
     const showDashboardCenter = useSelector( (state) => state.showDashboardCenter )
     const showDashboardRight = useSelector( (state) => state.showDashboardRight )
 
-    const [visible, setVisible] = useState(false)
     const [searchVisible, setSearchVisible] = useState(false)
+
+    useEffect(() => {
+        console.log("Atividades", activities);
+        console.log("Flash", props.flash);
+    }, [])
 
     return (
         <AuthenticatedBase
             auth={props.auth}
             errors={props.errors}
+            flash={props.flash}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
             <Head title="Dashboard" />
@@ -57,6 +49,8 @@ export default function Dashboard(props) {
                 { showDashboardLeft && (
                     <CCol>
                         <div className="d-grid gap-2 d-md-flex justify-content-center mb-3">
+
+                            {/* TODO: Separete to a component Dashboard Action */}
                             <CButtonGroup className="" role="group" aria-label="Button group with nested dropdown">
                                 <CTooltip content="Inserir uma atividade">
                                     <Link
@@ -69,7 +63,6 @@ export default function Dashboard(props) {
                                         <CIcon
                                             icon={cilPlus}
                                         />
-
                                     </Link>
                                 </CTooltip>
                                 <CTooltip content="Buscar atividade">
@@ -84,21 +77,6 @@ export default function Dashboard(props) {
                                     </CButton>
                                 </CTooltip>
                             </CButtonGroup>
-
-                            <CModal size="xl" visible={visible} onClose={() => setVisible(false)}>
-                                <CModalHeader onClose={() => setVisible(false)}>
-                                    <CModalTitle>CADASTRO DE ATIVIDADE</CModalTitle>
-                                </CModalHeader>
-                                <CModalBody>
-                                    Aqui vão os campos do cadastro de Atividade
-                                </CModalBody>
-                                <CModalFooter>
-                                    <CButton color="secondary" onClick={() => setVisible(false)}>
-                                        Fechar
-                                    </CButton>
-                                    <CButton color="primary">Salvar</CButton>
-                                </CModalFooter>
-                            </CModal>
                         </div>
 
                         <CCollapse visible={searchVisible}>
@@ -135,8 +113,8 @@ export default function Dashboard(props) {
                                 </CCardHeader>
                                 <CCardBody className="p-2">
                                     { activities && activities.map( activitity => (
-                                        <div  className="mb-2">
-                                            <ActivityCardItem key={activitity.id} activity={activitity} />
+                                        <div key={ activitity.id } className="mb-2">
+                                            <ActivityCardItem key={ activitity.id } activity={ activitity } />
                                         </div>
                                     ))}
                                 </CCardBody>
@@ -151,14 +129,14 @@ export default function Dashboard(props) {
                 ) }
 
                 { showDashboardCenter && (
-                    <CCol  lg={ !showDashboardLeft && !showDashboardRight ? 12 : 6 }>
+                    <CCol lg={ !showDashboardLeft && !showDashboardRight ? 12 : 6 }>
                         <DashboardMap />
                     </CCol>
                 ) }
 
                 { showDashboardRight && (
                     <CCol>
-                      <EntregadoresCardItem />
+                      <DashboardRightSidebar />
                     </CCol>
                 ) }
 

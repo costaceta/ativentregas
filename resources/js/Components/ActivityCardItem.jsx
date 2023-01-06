@@ -13,8 +13,6 @@ const ActivityCardItem = ({ activity }) => {
 
     const [visible, setVisible] = useState(false);
 
-    console.log("activity", activity)
-
     return (
 
         <>

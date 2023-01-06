@@ -47,8 +47,8 @@ class ActivitiesController extends Controller
         // dd($request);
         $request->validate([
             "activity_type_id" => 'required',
-            "order_date" => 'required',
-            "code" => 'required',
+            "order_date"       => 'required',
+            "code"             => 'required',
         ]);
 
         $activity = Activities::create([
@@ -58,7 +58,7 @@ class ActivitiesController extends Controller
             'message' => $request->message,
         ]);
 
-        return redirect()->route('activities.index')->with('message','Atividade criada com sucesso!');
+        return redirect()->route('dashboard')->with('message', 'Atividade criada com sucesso!');
     }
 
     /**

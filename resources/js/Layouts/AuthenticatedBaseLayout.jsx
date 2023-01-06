@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/inertia-react';
+import FlashMessage from '@/Components/FlashMessage';
 import {
-    AppSidebar,
-    AppHeader,
     AppContent,
-    AppFooter
+    AppFooter,
+    AppHeader,
+    AppSidebar
 } from '@/Components/index';
-export default function AuthenticatedBase({ auth, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+export default function AuthenticatedBase({ children }) {
     return (
         <div>
             <AppSidebar />
@@ -22,6 +16,7 @@ export default function AuthenticatedBase({ auth, header, children }) {
                     <AppContent children={children} />
                 </div>
                 <AppFooter />
+                <FlashMessage />
             </div>
       </div>
     );

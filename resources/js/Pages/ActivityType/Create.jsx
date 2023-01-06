@@ -38,7 +38,6 @@ export default function Index(props) {
     const submit = (e) => {
         e.preventDefault();
 
-        console.log('Form submetido', processing)
         post(route('activities-types.store'), { onSuccess: () => reset() });
     };
 

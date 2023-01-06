@@ -45,7 +45,7 @@ export default function Index(props) {
                 <Head title="Inserir atividade" />
                 <CRow>
                     <h3>Inserir atividade</h3>
-                    {
+                    {/* {
                         props.flash.message && (
                             <>
                                 <CCol xs={12}>
@@ -55,7 +55,7 @@ export default function Index(props) {
                                 </CCol>
                             </>
                         )
-                    }
+                    } */}
                     <CCol sm={12} lg={8}>
                         <CCard>
                             <CCardBody>

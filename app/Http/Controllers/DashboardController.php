@@ -12,7 +12,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // $activities = Activities::orderBy('created_at', 'desc')->get();
         $activities = DB::table('activities')
                             ->join('activity_types', 'activities.activity_type_id', '=', 'activity_types.id')
                             ->select('activities.*', 'activity_types.title as activity_type')
@@ -20,7 +19,7 @@ class DashboardController extends Controller
 
         // dd($activities);
 
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Dashboard/Index', [
             'activities' => $activities
         ]);
     }

@@ -243,7 +243,6 @@ export default function Index(props) {
 
 
         map.on('draw.create', ({ features }) => {
-            console.log(features)
             let data = draw.getAll();
             map.getSource('map-areas').setData(data);
             setMapAreas([...mapAreas, {title: 'Rafael'}])
